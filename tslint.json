@@ -22,10 +22,7 @@
       "rxjs/Rx"
     ],
     "import-spacing": true,
-    "indent": {
-      "options": [
-        "spaces"
-      ]
+     "indent": [true, "tabs", 2]
     },
     "max-classes-per-file": false,
     "max-line-length": [
@@ -149,4 +146,3 @@
       "kebab-case"
     ]
   }
-}
