@@ -6,3 +6,16 @@
 .container{
     max-width: 900px;
 }
+
+.bgcolor{
+    background-color: rgb(245, 199, 192);
+}
+mat-header-cell {
+    display:flex;
+    justify-content: flex-start;
+    font-size: larger;
+   }
+  mat-cell {
+    display:flex;
+    justify-content: flex-start;
+   }

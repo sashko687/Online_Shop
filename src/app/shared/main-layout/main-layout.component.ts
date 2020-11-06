@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 
@@ -6,11 +6,14 @@ import { ProductService } from '../product.service';
 	selector: 'app-main-layout',
 	templateUrl: './main-layout.component.html',
 	styleUrls: ['./main-layout.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent implements OnInit {
 	type = 'Phone';
-	constructor(private router: Router, private productServ: ProductService) {}
+	constructor(private router: Router, 
+		private productServ: ProductService, 
+	//	private cdr: ChangeDetectorRef
+		) {}
 
 	ngOnInit(): void {}
 
@@ -25,5 +28,6 @@ export class MainLayoutComponent implements OnInit {
 			});
 		}
 		this.productServ.setType(this.type);
+		//this.cdr.detectChanges();
 	}
 }

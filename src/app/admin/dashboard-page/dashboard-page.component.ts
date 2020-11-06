@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from 'src/app/shared/product.service';
 import { Subscription } from 'rxjs';
 
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 	selector: 'app-dashboard-page',
 	templateUrl: './dashboard-page.component.html',
 	styleUrls: ['./dashboard-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardPageComponent implements OnInit {
 	products = [];
@@ -13,12 +14,14 @@ export class DashboardPageComponent implements OnInit {
 	rSub: Subscription;
 	productName;
 
-	constructor(private productServ: ProductService) {}
+	constructor(
+		private productServ: ProductService,
+		private cdr: ChangeDetectorRef) {}
 
 	ngOnInit() {
 		this.pSub = this.productServ.getAll().subscribe((products) => {
-			console.log(products);
 			this.products = products;
+			this.cdr.detectChanges();
 		});
 	}
 

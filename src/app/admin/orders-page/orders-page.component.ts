@@ -1,25 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/shared/order.service';
 import { ProductService } from 'src/app/shared/product.service';
 
 @Component({
-  selector: 'app-orders-page',
-  templateUrl: './orders-page.component.html',
-  styleUrls: ['./orders-page.component.scss']
+	selector: 'app-orders-page',
+	templateUrl: './orders-page.component.html',
+	styleUrls: ['./orders-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersPageComponent implements OnInit {
- orders = [];
+	orders = [];
 	pSub: Subscription;
 	rSub: Subscription;
 
-
-	constructor(private orderServ: OrderService) {}
+	constructor(
+		private orderServ: OrderService,
+		private cdr: ChangeDetectorRef) {}
 
 	ngOnInit() {
 		this.pSub = this.orderServ.getAll().subscribe((orders) => {
-			console.log(orders);
 			this.orders = orders;
+			this.cdr.detectChanges();
 		});
 	}
 
@@ -39,4 +41,3 @@ export class OrdersPageComponent implements OnInit {
 		});
 	}
 }
-

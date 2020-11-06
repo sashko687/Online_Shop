@@ -1,6 +1,6 @@
 import { Product } from './../../shared/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ProductService } from 'src/app/shared/product.service';
@@ -9,16 +9,19 @@ import { ProductService } from 'src/app/shared/product.service';
 	selector: 'app-edit-page',
 	templateUrl: './edit-page.component.html',
 	styleUrls: ['./edit-page.component.scss'],
-	//changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPageComponent implements OnInit {
 	submited = false;
 	form: FormGroup;
 	product: Product;
 
-  constructor(private productServ: ProductService,
-     private route: ActivatedRoute, 
-     private router: Router) {}
+	constructor(
+		private productServ: ProductService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private cdr: ChangeDetectorRef
+	) {}
 
 	ngOnInit(): void {
 		this.route.params
@@ -36,6 +39,7 @@ export class EditPageComponent implements OnInit {
 					info: new FormControl(this.product.info, Validators.required),
 					price: new FormControl(this.product.price, Validators.required),
 				});
+				this.cdr.detectChanges();
 			});
 	}
 

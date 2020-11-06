@@ -1,24 +1,67 @@
 <div class="container" *ngIf="cartProducts.length > 0; else empty">
     <h2 class="text-center">Your order:</h2>
-
+   
     <table>
         <tbody>
             <tr *ngFor="let cartProduct of cartProducts; let i = index">
                 <td>{{ cartProduct.type }}</td>
                 <td>{{ cartProduct.title }}</td>
                 <td>
-                    <button class="btn btn-danger" (click)="delete(cartProduct)">Delete</button>
+                    <button mat-button color="warn"  (click)="delete(cartProduct)">Delete</button>
                 </td>
                 <td>{{ cartProduct.price }} $</td>
             </tr>
         </tbody>
     </table>
+
+    <mat-table [dataSource]="dataSource" class="bgcolor">
+        <!-- User name Definition -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef> Type  </mat-header-cell>
+          <mat-cell *matCellDef="let r"> {{r.type}} </mat-cell>
+        </ng-container>
+      
+        <!-- Age Definition -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+          <mat-cell *matCellDef="let r"> {{r.title}} </mat-cell>
+        
+        </ng-container>
+       
+        <ng-container matColumnDef="actions">
+            <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+            <mat-cell *matCellDef="let row" >
+                 <button mat-button color="primary">Delete</button>
+            </mat-cell>
+          </ng-container>
+        <!-- Title Definition -->
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+          <mat-cell *matCellDef="let r"> {{r.price}} </mat-cell>
+        </ng-container>
+      
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
     <hr>
     <b class="right">Total: {{totalPrice}} $</b>
 
     <h2 class="text-center">Delivery:</h2>
 
-    <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
+    <div >
+        <mat-form-field appearance="fill">
+          <mat-label>Input</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Textarea</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
 
@@ -59,6 +102,7 @@
         
     
     </form>
+    <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
 </div>
 
 <ng-template #empty>

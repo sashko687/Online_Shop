@@ -1,5 +1,5 @@
 import { AuthService } from './../../shared/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 	selector: 'app-login-page',
 	templateUrl: './login-page.component.html',
 	styleUrls: ['./login-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent implements OnInit {
 	form: FormGroup;

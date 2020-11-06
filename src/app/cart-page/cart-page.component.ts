@@ -1,19 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Product } from './../shared/interfaces';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProductService } from '../shared/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../shared/order.service';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
 	selector: 'app-cart-page',
 	templateUrl: './cart-page.component.html',
 	styleUrls: ['./cart-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartPageComponent implements OnInit {
 	cartProducts = [];
 	totalPrice = 0;
 	added = '';
 	unSub: Subscription;
+	displayedColumns = ['type', 'title','actions', 'price'];
+
+	dataSource
 
 	form: FormGroup;
 	submitted = false;
@@ -25,6 +31,8 @@ export class CartPageComponent implements OnInit {
 		this.cartProducts.forEach((i) => {
 			this.totalPrice += +i.price;
 		});
+	   console.log(this.cartProducts)
+		this.dataSource= this.cartProducts;
 
 		this.form = new FormGroup({
 			name: new FormControl(null, Validators.required),
@@ -52,9 +60,9 @@ export class CartPageComponent implements OnInit {
 		};
 
 		this.unSub = this.orderServ.create(order).subscribe((res) => {
-			this.form.reset();
 			this.added = 'Delivery is framed!';
 			this.submitted = false;
+			this.form.reset();
 		});
 	}
 

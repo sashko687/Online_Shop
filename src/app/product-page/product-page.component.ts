@@ -1,5 +1,5 @@
 import { ProductService } from 'src/app/shared/product.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 	selector: 'app-product-page',
 	templateUrl: './product-page.component.html',
 	styleUrls: ['./product-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductPageComponent implements OnInit {
 	product$;
