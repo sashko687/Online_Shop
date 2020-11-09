@@ -3,12 +3,13 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ProductService {
-	type ='Phone';
+	type = new BehaviorSubject('Phone');
 	cartProducts: Product[]=[];
 
 	constructor(private http: HttpClient) {}
@@ -53,7 +54,7 @@ export class ProductService {
 	}
 
 	setType(type){
-		this.type = type;
+		this.type.next(type);
 	}
 
 	addProduct(product){
