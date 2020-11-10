@@ -30,8 +30,8 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                "src/styles.scss",
-                "src/theme.scss"
+              "src/styles.scss",
+              "src/theme.scss"
             ],
             "scripts": []
           },
@@ -133,6 +133,7 @@
   },
   "defaultProject": "Shop",
   "cli": {
-    "analytics": "9d307890-8ea4-42b5-b697-6129ba17989b"
+    "analytics": "9d307890-8ea4-42b5-b697-6129ba17989b",
+    "defaultCollection": "@datorama/akita"
   }
 }

@@ -10,8 +10,8 @@ import { ProductService } from '../product.service';
 })
 export class MainLayoutComponent implements OnInit {
 	type = 'Phone';
-	constructor(private router: Router, 
-		private productServ: ProductService, 
+	constructor(private router: Router,
+		private productServ: ProductService,
 	//	private cdr: ChangeDetectorRef
 		) {}
 

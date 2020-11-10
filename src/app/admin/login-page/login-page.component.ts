@@ -1,4 +1,4 @@
-import { AuthService } from './../../shared/auth.service';
+import { SessionService } from './../../state/session.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +15,9 @@ export class LoginPageComponent implements OnInit {
 	form: FormGroup;
 	submitted = new BehaviorSubject(false);
 
-	constructor(public auth: AuthService, public router: Router) {}
+	constructor(
+		public session : SessionService,
+		 public router: Router) {}
 
 	ngOnInit(): void {
 		this.form = new FormGroup({
@@ -35,7 +37,7 @@ export class LoginPageComponent implements OnInit {
 			password: this.form.value.password,
 			returnSecureToken: true,
 		};
-		this.auth.login(user).subscribe(
+		this.session.login(user).subscribe(
 			(res) => {
 				this.form.reset();
 				this.router.navigate(['/admin', 'dashboard']);
