@@ -15,7 +15,11 @@ mat-header-cell {
     justify-content: flex-start;
     font-size: larger;
    }
-  mat-cell {
+ mat-cell {
     display:flex;
     justify-content: flex-start;
    }
+ mat-form-field{
+     width: 100%;
+ }
+

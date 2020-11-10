@@ -1,38 +1,38 @@
 import { Product } from './../shared/interfaces';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../shared/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../shared/order.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
 
 @Component({
 	selector: 'app-cart-page',
 	templateUrl: './cart-page.component.html',
 	styleUrls: ['./cart-page.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartPageComponent implements OnInit {
 	cartProducts = [];
 	totalPrice = 0;
 	added = '';
 	unSub: Subscription;
-	displayedColumns = ['type', 'title','actions', 'price'];
+	displayedColumns = ['type', 'title', 'actions', 'price'];
 
-	dataSource
+	dataSource = new BehaviorSubject([]);
 
 	form: FormGroup;
 	submitted = false;
 
-	constructor(private productServ: ProductService, private orderServ: OrderService) {}
+	constructor(private productServ: ProductService, private orderServ: OrderService, private cdr: ChangeDetectorRef) {}
 
 	ngOnInit() {
 		this.cartProducts = this.productServ.cartProducts;
 		this.cartProducts.forEach((i) => {
 			this.totalPrice += +i.price;
+
 		});
-	   console.log(this.cartProducts)
-		this.dataSource= this.cartProducts;
+		this.dataSource.next(this.cartProducts);
 
 		this.form = new FormGroup({
 			name: new FormControl(null, Validators.required),
@@ -69,11 +69,13 @@ export class CartPageComponent implements OnInit {
 	delete(product) {
 		this.totalPrice -= +product.price;
 		this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
+		this.dataSource.next(this.cartProducts);
+		this.cdr.detectChanges();
 	}
 
-	ngOnDestroy(){
-	if(this.unSub){
-		this.unSub.unsubscribe();
-	}
+	ngOnDestroy() {
+		if (this.unSub) {
+			this.unSub.unsubscribe();
+		}
 	}
 }

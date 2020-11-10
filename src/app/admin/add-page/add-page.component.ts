@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { ProductService } from 'src/app/shared/product.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { ProductService } from 'src/app/shared/product.service';
 })
 export class AddPageComponent implements OnInit {
 	form: FormGroup;
-	submitted = false;
+	submitted = new BehaviorSubject(false);
 	constructor(private productServ: ProductService, private router: Router) {}
 
 	ngOnInit(): void {
@@ -28,7 +29,7 @@ export class AddPageComponent implements OnInit {
 			return;
 		}
 
-		this.submitted = true;
+		this.submitted.next(true);
 
 		const product = {
 			type: this.form.value.type,
@@ -38,10 +39,9 @@ export class AddPageComponent implements OnInit {
 			price: this.form.value.price,
 			date: new Date(),
 		};
-		// console.log(this.form);
 		this.productServ.create(product).subscribe((res) => {
 			this.form.reset();
-			this.submitted = false;
+			this.submitted.next(false);
 			this.router.navigate(['/']);
 		});
 	}

@@ -3,25 +3,34 @@
     <h2>Login as administrator</h2>
 
     <div class="form-control">
-        <label for="email"></label>
-        <input id="email" type="email" formControlName="email"/>
+        <mat-form-field appearance="fill">
+        <mat-label for="email">Email</mat-label>
+        <mat-icon matPrefix>alternate_email</mat-icon>
+        <input matInput id="email" type="email" formControlName="email"/>
         <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
-            <small *ngIf="form.get('email').errors.required">Enter email</small>
+            <small *ngIf="form.get('email').errors.required">Please! Enter email</small>
             <small *ngIf="form.get('email').errors.email">Enter valid email</small>
         </div>
+    </mat-form-field>
     </div>
+    
     <div class="form-control">
-        <label for="password"></label>
-        <input id="password" type="password" formControlName="password"/>
+        <mat-form-field appearance="fill">
+        <mat-label for="password">Password</mat-label>
+        <input matInput id="password" [type]="hide ? 'password' : 'text'" formControlName="password"/>
+        <button mat-icon-button matSuffix (click)="hide = !hide" type="button" [attr.aria-label]="'Hide password'" >
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
         <div *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
-            <small *ngIf="form.get('password').errors.required">Enter password</small>
+            <small *ngIf="form.get('password').errors.required">Please! Enter password</small>
             <small *ngIf="form.get('password').errors.minlength">
                 Password must be at least  {{form.get('password').errors.minlength.requiredLength}} characters. 
                 Now it is {{form.get('password').errors.minlength.actualLength}}
             </small>
         </div>
+    </mat-form-field>
     </div>
-    <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || submited">Logon</button>
+    <button mat-raised-button color="primary" type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || (submitted | async)">Logon</button>
     
 
 </form>

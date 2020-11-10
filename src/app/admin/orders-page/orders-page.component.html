@@ -1,42 +1,68 @@
 <div *ngIf="orders.length; else noOrders">
-    <h2 class="text-center">Table of orders</h2>
+	<h2 class="text-center">Table of orders</h2>
 
-     <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Phone</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Products</th>
-                <th>Price</th>
-                <th>Status</th>
-            </tr>
-        </thead>
+	<table mat-table [dataSource]="orders" >
+		<!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
 
-        <tbody>
-            <tr *ngFor="let order of orders;">
-                <td>{{ order.date | date : 'medium'}}</td>
-                <td>{{ order.phone}}</td>
-                <td>{{ order.name}}</td>
-                <td>{{ order.address}}</td>
-                <td>
-                    <div *ngFor="let product of order.orders">
-                        {{product.title}}
-                    </div>
-                </td>
-                <td>
-                    <div class="text-center">{{order.price}}$</div>
-                    <div class="text-center">{{order.payment}}</div>
-                 </td>
-                <td>
-                    <button class="btn btn-danger" (click)="remove(order.id)">Complited</button>
-                </td>
-            </tr>
-        </tbody>
+		<!-- Position Column -->
+		<ng-container matColumnDef="date">
+			<th mat-header-cell *matHeaderCellDef>Date</th>
+			<td mat-cell *matCellDef="let element">{{ element.date | date: "medium"}}</td>
+		</ng-container>
+
+		<!-- Name Column -->
+		<ng-container matColumnDef="phone">
+			<th mat-header-cell *matHeaderCellDef>Phone</th>
+			<td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+		</ng-container>
+
+		<!-- Weight Column -->
+		<ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef>Name</th>
+			<td mat-cell *matCellDef="let element">{{ element.name }}</td>
+		</ng-container>
+
+        <ng-container matColumnDef="address">
+			<th mat-header-cell *matHeaderCellDef>Address</th>
+			<td mat-cell *matCellDef="let element">{{ element.address }}</td>
+		</ng-container>
+
+		<!-- Symbol Column -->
+		<ng-container matColumnDef="orders">
+			<th mat-header-cell *matHeaderCellDef>Products</th>
+			<td mat-cell *matCellDef="let element">
+				<div *ngFor="let product of element.orders">
+					{{ product.title }}
+				</div>
+			</td>
+        </ng-container>
+              
+        <ng-container matColumnDef="price">
+			<th mat-header-cell *matHeaderCellDef>Name</th>
+			<td mat-cell *matCellDef="let element">
+                <div class="text-center">{{ element.price }}$</div>
+				<div class="text-center">{{ element.payment }}</div>
+            </td>
+		</ng-container>
+      
+        <ng-container matColumnDef="status">
+			<th mat-header-cell *matHeaderCellDef>Status</th>
+			<td mat-cell *matCellDef="let element">
+                <button mat-raised-button color="warn" (click)="remove(element.id)">Complited</button>
+            </td>
+		</ng-container>
+      
+        
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+ 
 </div>
 
-<ng-template #noOrders>
-    <p class="text-center">No orders!</p>
+
+<ng-template  #noOrders>
+    <div class="flex-center"><mat-spinner></mat-spinner></div>
+	<p class="text-center">No orders!</p>
 </ng-template>

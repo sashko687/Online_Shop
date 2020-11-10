@@ -1,5 +1,7 @@
+import { Product } from './../shared/interfaces';
 import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../shared/product.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-product',
@@ -17,7 +19,7 @@ export class ProductComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	addProduct(product) {
+	addProduct(product : Product):  void{
 		this.productServ.addProduct(product);
 	}
 }

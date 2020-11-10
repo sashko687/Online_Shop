@@ -7,7 +7,7 @@
 
     <h2>Price: {{product.price}} $</h2>
 
-    <button [routerLink]="['/product', product.id]" class="btn btn-dark">Open</button>
+    <button mat-button  [routerLink]="['/product', product.id]" class="btn">Open</button>
 
-    <button [routerLink]="['/cart']" class="btn btn-dark" (click)="addProduct(product)">Add to cart</button>
+    <button mat-button [routerLink]="['/cart']" class="btn" (click)="addProduct(product)">Add to cart</button>
 </div>

@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ProductService } from 'src/app/shared/product.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'app-edit-page',
@@ -12,7 +13,7 @@ import { ProductService } from 'src/app/shared/product.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPageComponent implements OnInit {
-	submited = false;
+	submitted = new BehaviorSubject(false);
 	form: FormGroup;
 	product: Product;
 
@@ -47,7 +48,7 @@ export class EditPageComponent implements OnInit {
 		if (this.form.invalid) {
 			return;
 		}
-		this.submited = true;
+		this.submitted.next(true);
 
 		this.productServ
 			.update({
@@ -60,7 +61,7 @@ export class EditPageComponent implements OnInit {
 				date: new Date(),
 			})
 			.subscribe((res) => {
-				this.submited = false;
+				this.submitted.next(false);
 				this.router.navigate(['/admin', 'dashboard']);
 			});
 	}

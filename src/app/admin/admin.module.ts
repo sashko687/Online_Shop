@@ -11,6 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../shared/auth.guard';
 import { QuillModule } from 'ngx-quill';
 import { SearchPipe } from '../shared/search.pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
 	declarations: [
@@ -23,6 +31,16 @@ import { SearchPipe } from '../shared/search.pipe';
 		SearchPipe,
 	],
 	imports: [
+		MatProgressSpinnerModule,
+		MatPaginatorModule,
+		MatInputModule,
+		MatButtonModule,
+		MatIconModule,
+		MatSelectModule,
+		MatIconModule,
+		MatFormFieldModule,
+		MatButtonModule,
+		MatTableModule,
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
@@ -32,7 +50,7 @@ import { SearchPipe } from '../shared/search.pipe';
 				path: '',
 				component: AdminLayoutComponent,
 				children: [
-					{ path: '', redirectTo: '/admin/login', pathMatch: 'full' },
+					{ path: '', redirectTo: '/admin/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
 					{ path: 'login', component: LoginPageComponent },
 					{ path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
 					{ path: 'add', component: AddPageComponent, canActivate: [AuthGuard] },

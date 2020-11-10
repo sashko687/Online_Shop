@@ -2,38 +2,61 @@
     <h2 class="text-center">Dashboard of products</h2>
 
     <div class="form-control">
-        <input type="text" placeholder="Find a product..." [(ngModel)]="productName">
+        <mat-form-field>
+            <input matInput type="text" placeholder="Find a product..." [(ngModel)]="productName">
+        </mat-form-field>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Date of creation</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
+    <table mat-table [dataSource]="products | search: productName" >
 
-        <tbody>
-            <tr *ngFor="let product of products | search: productName; let idx = index">
-                <td>{{ idx + 1 }}</td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.date | date : 'short'}}</td>
-                <td>
-                    <button class="btn btn-dark" [routerLink]="['/admin','product',product.id,'edit']">Edit</button>
-                </td>
-                <td>
-                    <button class="btn btn-danger" (click)="remove(product.id)">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+          </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date of creation</th>
+          <td mat-cell *matCellDef="let element"> {{element.date |date : 'short'}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef> Edit </th>
+          <td mat-cell *matCellDef="let element"> 
+         <button mat-raised-button color="primary" class="btn " [routerLink]="['/admin','product',element.id,'edit']" >Edit</button>      
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let element"> 
+           <button mat-raised-button color="warn" class="btn btn-danger" (click)="remove(element.id)" >Delete</button>      
+          </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
 </div>
 
 <ng-template #loading>
+  <div class="flex-center"><mat-spinner></mat-spinner></div>
     <p class="text-center">Loading...</p>
 </ng-template>

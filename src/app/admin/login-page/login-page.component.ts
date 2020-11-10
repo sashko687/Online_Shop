@@ -2,6 +2,7 @@ import { AuthService } from './../../shared/auth.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'app-login-page',
@@ -10,8 +11,9 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent implements OnInit {
+	hide = true;
 	form: FormGroup;
-	submited: boolean;
+	submitted = new BehaviorSubject(false);
 
 	constructor(public auth: AuthService, public router: Router) {}
 
@@ -26,7 +28,7 @@ export class LoginPageComponent implements OnInit {
 			return;
 		}
 
-		this.submited = true;
+		this.submitted.next(true);
 
 		const user = {
 			email: this.form.value.email,
@@ -37,10 +39,10 @@ export class LoginPageComponent implements OnInit {
 			(res) => {
 				this.form.reset();
 				this.router.navigate(['/admin', 'dashboard']);
-				this.submited = false;
+				this.submitted.next(false);
 			},
 			() => {
-				this.submited = false;
+				this.submitted.next(false);
 			}
 		);
 	}

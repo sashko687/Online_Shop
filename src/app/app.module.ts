@@ -1,7 +1,11 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +23,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 
 @NgModule({
 	declarations: [
@@ -31,6 +39,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		SortingPipe,
 	],
 	imports: [
+		
+		MatProgressSpinnerModule,
+		MatPaginatorModule,
+		MatButtonModule,
+		MatIconModule,
+		MatSelectModule,
+		MatInputModule,
 		MatFormFieldModule,
 		MatButtonModule,
 		MatTableModule,
@@ -41,7 +56,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		ReactiveFormsModule,
 		QuillModule.forRoot(),
 		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-		BrowserAnimationsModule
+		BrowserAnimationsModule,
+		environment.production ? [] : AkitaNgDevtools.forRoot(),
+		AkitaNgRouterStoreModule.forRoot()
 	],
 	providers: [
 		{
@@ -49,6 +66,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 			multi: true,
 			useClass: AuthInterceptor,
 		},
+		{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }},
 	],
 	bootstrap: [AppComponent],
 })

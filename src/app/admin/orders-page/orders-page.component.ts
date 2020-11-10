@@ -1,7 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { OrderService } from 'src/app/shared/order.service';
 import { ProductService } from 'src/app/shared/product.service';
+import { takeUntil } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
 	selector: 'app-orders-page',
@@ -9,35 +12,41 @@ import { ProductService } from 'src/app/shared/product.service';
 	styleUrls: ['./orders-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersPageComponent implements OnInit {
+export class OrdersPageComponent implements OnInit, OnDestroy {
+	displayedColumns: string[] = ['date', 'phone', 'name', 'address', 'orders', 'price', 'status'];
 	orders = [];
-	pSub: Subscription;
-	rSub: Subscription;
+	private pSub$ = new Subject();
+	private rSub$ = new Subject();
 
-	constructor(
-		private orderServ: OrderService,
-		private cdr: ChangeDetectorRef) {}
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+
+	constructor(private orderServ: OrderService, private cdr: ChangeDetectorRef) {}
 
 	ngOnInit() {
-		this.pSub = this.orderServ.getAll().subscribe((orders) => {
-			this.orders = orders;
-			this.cdr.detectChanges();
-		});
+		this.orderServ
+			.getAll()
+			.pipe(takeUntil(this.pSub$))
+			.subscribe((orders) => {
+				this.orders = orders;
+				this.cdr.detectChanges();
+			});
 	}
 
-	ngOnDesroy() {
-		if (this.pSub) {
-			this.pSub.unsubscribe();
-		}
+	ngOnDestroy() {
+		this.pSub$.next();
+		this.pSub$.complete();
 
-		if (this.rSub) {
-			this.rSub.unsubscribe();
-		}
+		this.rSub$.next();
+		this.rSub$.complete();
 	}
 
 	remove(id) {
-		this.rSub = this.orderServ.remove(id).subscribe(() => {
-			this.orders = this.orders.filter((orders) => orders.id !== id);
-		});
+		this.orderServ
+			.remove(id)
+			.pipe(takeUntil(this.rSub$))
+			.subscribe(() => {
+				this.orders = this.orders.filter((orders) => orders.id !== id);
+				this.cdr.detectChanges();
+			});
 	}
 }

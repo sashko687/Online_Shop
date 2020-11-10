@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/shared/product.service';
 import { Subscription } from 'rxjs';
 
@@ -8,11 +8,12 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./dashboard-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPageComponent implements OnInit {
+export class DashboardPageComponent implements OnInit,  OnDestroy {
 	products = [];
 	pSub: Subscription;
 	rSub: Subscription;
 	productName;
+	displayedColumns: string[] = ['id','title', 'price', 'date', 'edit', 'delete'];
 
 	constructor(
 		private productServ: ProductService,
@@ -24,20 +25,18 @@ export class DashboardPageComponent implements OnInit {
 			this.cdr.detectChanges();
 		});
 	}
-
-	ngOnDesroy() {
-		if (this.pSub) {
-			this.pSub.unsubscribe();
-		}
-
-		if (this.rSub) {
-			this.rSub.unsubscribe();
-		}
-	}
-
-	remove(id) {
+	remove(id): void {
 		this.rSub = this.productServ.remove(id).subscribe(() => {
 			this.products = this.products.filter((product) => product.id !== id);
+			this.cdr.detectChanges();
 		});
 	}
+
+	ngOnDestroy() {
+
+			this.pSub?.unsubscribe();
+
+			this.rSub?.unsubscribe();
+		}
+
 }

@@ -1,16 +1,18 @@
+import { Product } from './../shared/interfaces';
 import { ProductService } from 'src/app/shared/product.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-product-page',
 	templateUrl: './product-page.component.html',
 	styleUrls: ['./product-page.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductPageComponent implements OnInit {
-	product$;
+	product$: Observable<Product>;
 
 	constructor(private productServ: ProductService, private route: ActivatedRoute) {}
 

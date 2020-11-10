@@ -1,19 +1,24 @@
 .product {
-    .header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
+	.header {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
 
-    h2 {
-        margin-bottom: .5rem;
-    }
+	h2 {
+		margin-bottom: 0.5rem;
+	}
 }
 
 .flex {
-    display: flex;
+	display: flex;
 }
 
 .item {
-    width: 50%;
+	width: 50%;
+}
+
+.btn {
+	background-color: var(--btn-bgcolor);
+	color: var(--btn-color);
 }
