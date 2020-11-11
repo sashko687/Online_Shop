@@ -9,23 +9,18 @@ import { SessionStore, SessionState } from './session.store';
 	providedIn: 'root',
 })
 
-export class SessionQuery extends Query<User> {
-	isLoggedIn$ = this.select(( user ) => toBoolean(user));
+export class SessionQuery extends Query<SessionState> {
+	isLoggedIn$ = this.select(( {user} ) => toBoolean(user?.idToken));
 
-	loggedInUser$ = this.select().pipe(
-		filter(( user ) => toBoolean(user)),
-		map(( {  idToken }) => `${idToken}`)
-	);
-
-	constructor(protected store: SessionStore) {
+  	constructor(protected store: SessionStore) {
 		super(store);
 	}
 
 	isLoggedIn() {
-		return toBoolean(this.getValue().idToken);
+		return toBoolean(this.getValue().user?.idToken);
 	}
 
 	getToken(){
-		return this.getValue().idToken
+		return this.getValue().user?.idToken
 	}
 }

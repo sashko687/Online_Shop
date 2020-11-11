@@ -28,7 +28,7 @@ export class EditPageComponent implements OnInit {
 		this.route.params
 			.pipe(
 				switchMap((params) => {
-					return this.productServ.getById(params['id']);
+					return this.productServ.getById(params.id);
 				})
 			)
 			.subscribe((product) => {

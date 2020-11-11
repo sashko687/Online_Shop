@@ -2,26 +2,28 @@
     <h2 class="text-center">Your order:</h2>
 
     <mat-table [dataSource]="dataSource" class="bgcolor">
-        <!-- User name Definition -->
+        <!-- Type  Column-->
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef> Type  </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.type}} </mat-cell>
         </ng-container>
       
-        <!-- Age Definition -->
+        <!-- Title Column -->
         <ng-container matColumnDef="title">
           <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.title}} </mat-cell>
         
         </ng-container>
        
+         <!-- Action Column -->
         <ng-container matColumnDef="actions">
             <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
             <mat-cell *matCellDef="let row" >
                  <button mat-button color="primary" (click)="delete(row)">Delete</button>
             </mat-cell>
           </ng-container>
-        <!-- Title Definition -->
+
+         <!-- Price Column -->
         <ng-container matColumnDef="price">
           <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.price}} </mat-cell>
@@ -84,13 +86,11 @@
                 <mat-option value="Cash">Cash</mat-option>
                 <mat-option value="Card">Card</mat-option>
             </mat-select>
-            
           </mat-form-field>
         </div>
 
-        <button mat-stroked-button color="accent" type="submit" class="btn btn-primary  btn-block text-center" [disabled]="form.invalid || submitted">Add</button>
+        <button mat-stroked-button  color="accent" type="submit" class="btn btn-primary  btn-block text-center" [disabled]="form.invalid || submitted">Add</button>
         
-    
     </form>
     <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
 </div>

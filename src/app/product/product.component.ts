@@ -14,7 +14,6 @@ export class ProductComponent implements OnInit {
 
 	constructor(
 		private productServ: ProductService,
-		private cdr: ChangeDetectorRef
 		) {}
 
 	ngOnInit(): void {}

@@ -1,4 +1,3 @@
-import { Session } from './../state/session.model';
 import { SessionService } from './../state/session.service';
 import { SessionQuery } from './../state/session.query';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';

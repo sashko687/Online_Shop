@@ -27,6 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
+import { SuccesOrderComponent } from './succes-order/succes-order.component';
 
 @NgModule({
 	declarations: [
@@ -37,6 +38,7 @@ import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 		CartPageComponent,
 		ProductComponent,
 		SortingPipe,
+		SuccesOrderComponent,
 	],
 	imports: [
 		

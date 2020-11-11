@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Product } from './../shared/interfaces';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../shared/product.service';
@@ -24,13 +25,17 @@ export class CartPageComponent implements OnInit {
 	form: FormGroup;
 	submitted = false;
 
-	constructor(private productServ: ProductService, private orderServ: OrderService, private cdr: ChangeDetectorRef) {}
+	constructor(
+		private productServ: ProductService,
+		private orderServ: OrderService,
+		private cdr: ChangeDetectorRef,
+		private router: Router
+	) {}
 
 	ngOnInit() {
 		this.cartProducts = this.productServ.cartProducts;
 		this.cartProducts.forEach((i) => {
 			this.totalPrice += +i.price;
-
 		});
 		this.dataSource.next(this.cartProducts);
 
@@ -59,10 +64,12 @@ export class CartPageComponent implements OnInit {
 			date: new Date(),
 		};
 
-		this.unSub = this.orderServ.create(order).subscribe((res) => {
+		this.orderServ.create(order).subscribe((res) => {
+			this.productServ.cartProducts =[];
 			this.added = 'Delivery is framed!';
 			this.submitted = false;
 			this.form.reset();
+			this.router.navigate(['/success']);
 		});
 	}
 

@@ -1,3 +1,4 @@
+import { SuccesOrderComponent } from './succes-order/succes-order.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './shared/main-layout/main-layout.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
 			{ path: '', component: MainPageComponent },
 			{ path: 'product/:id', component: ProductPageComponent },
 			{ path: 'cart', component: CartPageComponent },
+			{ path: 'success', component: SuccesOrderComponent },
 		],
 	},
 	{

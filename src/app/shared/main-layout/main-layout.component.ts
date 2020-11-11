@@ -1,3 +1,4 @@
+import { SessionService } from './../../state/session.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
@@ -6,14 +7,16 @@ import { ProductService } from '../product.service';
 	selector: 'app-main-layout',
 	templateUrl: './main-layout.component.html',
 	styleUrls: ['./main-layout.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent implements OnInit {
 	type = 'Phone';
-	constructor(private router: Router,
+	constructor(
+		private router: Router,
 		private productServ: ProductService,
-	//	private cdr: ChangeDetectorRef
-		) {}
+		private session: SessionService
+	) //	private cdr: ChangeDetectorRef
+	{}
 
 	ngOnInit(): void {}
 
