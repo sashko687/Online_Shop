@@ -1,3 +1,6 @@
+import { TabletPageComponent } from './tablet-page/tablet-page.component';
+import { LaptopPageComponent } from './laptop-page/laptop-page.component';
+import { PhohePageComponent } from './phohe-page/phohe-page.component';
 import { SuccesOrderComponent } from './succes-order/succes-order.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -13,6 +16,9 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: '/', pathMatch: 'full' },
 			{ path: '', component: MainPageComponent },
+			{ path: 'phone', component: PhohePageComponent},
+			{ path: 'tablet', component: TabletPageComponent },
+			{ path: 'laptop', component: LaptopPageComponent },
 			{ path: 'product/:id', component: ProductPageComponent },
 			{ path: 'cart', component: CartPageComponent },
 			{ path: 'success', component: SuccesOrderComponent },

@@ -1,3 +1,4 @@
+import { SearchPipe } from './shared/search.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
@@ -28,6 +29,14 @@ import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { SuccesOrderComponent } from './succes-order/succes-order.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { PhohePageComponent } from './phohe-page/phohe-page.component';
+import { LaptopPageComponent } from './laptop-page/laptop-page.component';
+import { TabletPageComponent } from './tablet-page/tablet-page.component';
+import { SearchProductPipe } from './shared/searchProductPipe';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
 	declarations: [
@@ -37,11 +46,18 @@ import { SuccesOrderComponent } from './succes-order/succes-order.component';
 		ProductPageComponent,
 		CartPageComponent,
 		ProductComponent,
+		SearchProductPipe,
 		SortingPipe,
 		SuccesOrderComponent,
+		PhohePageComponent,
+		LaptopPageComponent,
+		TabletPageComponent,
 	],
 	imports: [
-		
+		MatBadgeModule,
+		MatMenuModule,
+		MatNativeDateModule,
+		MatDatepickerModule,
 		MatProgressSpinnerModule,
 		MatPaginatorModule,
 		MatButtonModule,
@@ -68,6 +84,7 @@ import { SuccesOrderComponent } from './succes-order/succes-order.component';
 			multi: true,
 			useClass: AuthInterceptor,
 		},
+		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
 		{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }},
 	],
 	bootstrap: [AppComponent],
