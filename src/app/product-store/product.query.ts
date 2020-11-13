@@ -14,6 +14,10 @@ export class ProductQuery extends QueryEntity<ProductState, Product> {
 		return this.selectAll();
 	}
 
+	selectProduct(id): Observable<Product> {
+		return this.selectEntity(id);
+	}
+
 	selectLoaded(): Observable<boolean> {
 		return this.select((state) => state.isLoaded);
 	}

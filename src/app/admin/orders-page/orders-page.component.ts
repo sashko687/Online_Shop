@@ -1,11 +1,9 @@
-import { OrdersStore, OrderState } from './../../ordersStore/orders.store';
 import { Order } from './../order.interface';
-import { OrdersQuery } from './../../ordersStore/orders.query';
+import { OrdersQuery } from './../../orders-store/orders.query';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { OrderService } from 'src/app/shared/order.service';
-import { ProductService } from 'src/app/shared/product.service';
-import { take, takeUntil, filter, switchMap } from 'rxjs/operators';
+import { OrderService } from 'src/app/orders-store/order.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-orders-page',

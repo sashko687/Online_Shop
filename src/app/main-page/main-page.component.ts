@@ -1,8 +1,8 @@
-import { ProductQuery } from './../productStore/product.query';
+import { ProductQuery } from './../product-store/product.query';
 import { Product } from './../shared/interfaces';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProductService } from '../shared/product.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ProductService } from '../product-store/product.service';
 
 @Component({
 	selector: 'app-main-page',
@@ -12,6 +12,7 @@ import { ProductService } from '../shared/product.service';
 })
 export class MainPageComponent implements OnInit {
 	products$: Observable<Product[]>;
+	searchProduct$;
 	constructor(
 		public productServ: ProductService,
 		public productQuery: ProductQuery,

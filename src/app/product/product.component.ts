@@ -1,7 +1,6 @@
 import { Product } from './../shared/interfaces';
 import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ProductService } from '../shared/product.service';
-import { Observable } from 'rxjs';
+import { ProductService } from '../product-store/product.service';
 
 @Component({
 	selector: 'app-product',

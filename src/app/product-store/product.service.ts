@@ -1,5 +1,5 @@
-import { ProductsStore } from './../productStore/product.store';
-import { FbResponse, Product } from './interfaces';
+import { ProductsStore } from './product.store';
+import { FbResponse, Product } from '../shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,6 +12,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ProductService {
 	type = new BehaviorSubject('Phone');
 	cartProducts: Product[] = [];
+	countProductInCart = new BehaviorSubject(0);
+	filterProduct = new BehaviorSubject('');
 
 	constructor(private http: HttpClient, private productStore: ProductsStore) {}
 
@@ -41,12 +43,12 @@ export class ProductService {
 		);
 	}
 
-	public getById(id: Product): Observable<any> {
+	public getById(id: string): Observable<any> {
 		return this.http.get(`${environment.fbDbUrl}/products/${id}.json`).pipe(
 			map((res: Product) => {
 				return { ...res, id, date: new Date(res.date) };
 			}),
-			tap((response) => this.productStore.set(response))
+			tap((response) => this.productStore.update(response))
 		);
 	}
 
@@ -68,5 +70,6 @@ export class ProductService {
 
 	addProduct(product: Product): void {
 		this.cartProducts.push(product);
+		this.countProductInCart.next(this.cartProducts.length);
 	}
 }

@@ -1,10 +1,10 @@
-import { Order } from './../admin/order.interface';
-import { OrdersStore } from './../ordersStore/orders.store';
+import { Order } from '../admin/order.interface';
+import { OrdersStore } from './orders.store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { FbResponse } from './interfaces';
+import { FbResponse } from '../shared/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({

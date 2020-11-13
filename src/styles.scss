@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
+@import '~hamburgers/_sass/hamburgers/hamburgers.scss';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -325,3 +326,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-form-field{
   width: 100%;
 }
+.dashboard {
+  display: flex; 
+  flex-wrap: wrap;
+  }
+  .box{
+  width: 33.3%;
+  margin-top: 2rem;
+  }

@@ -1,4 +1,41 @@
 .mobile{
-    min-width: 100px;
+    min-width: 110px;
     font-size: x-large;
+}
+input{
+    width: 35%;
+    justify-self: end;
+}
+ul{
+    align-self: center;
+}
+button{
+    height: 40px;
+}
+.fixed{
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+.container-product{
+    padding-top: 5%;
+}
+.mobile-menu{
+    display: none;
+}
+@media (max-width:767px){
+    ul{
+        display: none;
+    }
+    .mobile-menu{
+        display:block;
+    }
+    .container-product{
+        padding-top: 15%;
+    }
+
+    input {
+        width: 65%;
+        justify-self: end;
+    }
 }

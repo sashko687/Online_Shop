@@ -1,7 +1,7 @@
 import { SessionService } from './../../state/session.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductService } from '../product.service';
+import { ProductService } from 'src/app/product-store/product.service';
 
 @Component({
 	selector: 'app-main-layout',
@@ -11,26 +11,20 @@ import { ProductService } from '../product.service';
 })
 export class MainLayoutComponent implements OnInit {
 	type = 'Phone';
-	constructor(
-		private router: Router,
-		private productServ: ProductService,
-		private session: SessionService
-	) //	private cdr: ChangeDetectorRef
-	{}
+	hidden = false;
+	constructor(public productServ: ProductService) {}
 
 	ngOnInit(): void {}
+	applyFilter(event: Event) {
+		const filterValue = (event.target as HTMLInputElement).value;
+		this.productServ.filterProduct.next(filterValue);
+	}
+
+	toggleBadgeVisibility() {
+		this.hidden = !this.hidden;
+	}
 
 	setType(type) {
-		this.type = type;
-
-		if (this.type !== 'Cart') {
-			this.router.navigate(['/'], {
-				queryParams: {
-					type: this.type,
-				},
-			});
-		}
-		this.productServ.setType(this.type);
-		//this.cdr.detectChanges();
+		this.productServ.setType(type);
 	}
 }

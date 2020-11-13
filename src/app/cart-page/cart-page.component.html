@@ -1,4 +1,4 @@
-<div class="container" *ngIf="cartProducts.length > 0; else empty">
+<div class="container" *ngIf="cartProducts.length; else empty">
     <h2 class="text-center">Your order:</h2>
 
     <mat-table [dataSource]="dataSource" class="bgcolor">
@@ -76,7 +76,6 @@
                 </div>
               </mat-form-field>
         </div>
-
         
         <div class="form-control">
             <mat-form-field appearance="fill">
@@ -96,6 +95,6 @@
 </div>
 
 <ng-template #empty>
-    <h2 class="text-center">Cart is empty, select product</h2>
+  <div class="cart-emty"><h2 class="text-center">Cart is empty, select product</h2></div>
 </ng-template>
 

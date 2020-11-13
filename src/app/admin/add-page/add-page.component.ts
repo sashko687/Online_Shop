@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { ProductService } from 'src/app/shared/product.service';
+import { ProductService } from 'src/app/product-store/product.service';
 
 @Component({
 	selector: 'app-add-page',

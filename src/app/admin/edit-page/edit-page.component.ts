@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { ProductService } from 'src/app/shared/product.service';
+import { ProductService } from 'src/app/product-store/product.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

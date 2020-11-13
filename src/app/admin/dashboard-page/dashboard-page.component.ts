@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ProductService } from 'src/app/shared/product.service';
+import { ProductService } from 'src/app/product-store/product.service';
 import { Subscription } from 'rxjs';
 
 @Component({
