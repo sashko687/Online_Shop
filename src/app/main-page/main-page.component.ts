@@ -8,18 +8,16 @@ import { ProductService } from '../product-store/product.service';
 	selector: 'app-main-page',
 	templateUrl: './main-page.component.html',
 	styleUrls: ['./main-page.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPageComponent implements OnInit {
 	products$: Observable<Product[]>;
 	searchProduct$;
-	constructor(
-		public productServ: ProductService,
-		public productQuery: ProductQuery,
-		) {}
+	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {
-		this.products$ = this.productQuery.selectProducts()
+		this.products$ = this.productQuery.selectProducts();
+		this.searchProduct$ = this.productQuery.selectSearch();
 		if (!this.productQuery.getHasCache()) {
 			this.productServ.getAll().subscribe();
 		}

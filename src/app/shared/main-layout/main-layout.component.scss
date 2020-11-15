@@ -3,7 +3,7 @@
     font-size: x-large;
 }
 input{
-    width: 35%;
+    width: 50%;
     justify-self: end;
 }
 ul{
@@ -23,6 +23,9 @@ button{
 .mobile-menu{
     display: none;
 }
+.mat-badge {
+    position: fixed;
+}
 @media (max-width:767px){
     ul{
         display: none;
@@ -38,4 +41,8 @@ button{
         width: 65%;
         justify-self: end;
     }
+    .mat-badge {
+        position: relative;
+    }
 }
+

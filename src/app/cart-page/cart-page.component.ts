@@ -1,4 +1,6 @@
-import { takeUntil } from 'rxjs/operators';
+import { ProductQuery } from './../product-store/product.query';
+import { ProductsStore } from './../product-store/product.store';
+import { takeUntil, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Product } from './../shared/interfaces';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
@@ -15,30 +17,25 @@ import { DataSource } from '@angular/cdk/table';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartPageComponent implements OnInit {
-	cartProducts = [];
-	totalPrice = 0;
+	cartProducts: Observable<Product[]>;
+	totalPrice: Observable<number>;
 	added = '';
 	unSub = new Subject();
 	displayedColumns = ['type', 'title', 'actions', 'price'];
 
-	dataSource = new BehaviorSubject([]);
-
 	form: FormGroup;
-	submitted = false;
+	submitted = new BehaviorSubject(false);
 
 	constructor(
 		private productServ: ProductService,
 		private orderServ: OrderService,
-		private cdr: ChangeDetectorRef,
-		private router: Router
+		private router: Router,
+		private productQuery: ProductQuery
 	) {}
 
 	ngOnInit() {
-		this.cartProducts = this.productServ.cartProducts;
-		this.cartProducts.forEach((i) => {
-			this.totalPrice += +i.price;
-		});
-		this.dataSource.next(this.cartProducts);
+		this.cartProducts = this.productQuery.selectCartProduct();
+		this.totalPrice = this.cartProducts.pipe(map((list) => list.reduce((acc, value) => acc += +value.price, 0)));
 
 		this.form = new FormGroup({
 			name: new FormControl(null, Validators.required),
@@ -53,7 +50,7 @@ export class CartPageComponent implements OnInit {
 			return;
 		}
 
-		this.submitted = true;
+		this.submitted.next(true);
 
 		const order = {
 			name: this.form.value.name,
@@ -65,21 +62,20 @@ export class CartPageComponent implements OnInit {
 			date: new Date(),
 		};
 
-		this.orderServ.create(order).pipe(takeUntil(this.unSub)).subscribe((res) => {
-			this.productServ.cartProducts = [];
-			this.added = 'Delivery is framed!';
-			this.submitted = false;
-			this.form.reset();
-			this.router.navigate(['/success']);
-		});
+		this.orderServ
+			.create(order)
+			.pipe(takeUntil(this.unSub))
+			.subscribe((res) => {
+				this.productServ.setCartEmpty();
+				this.added = 'Delivery is framed!';
+				this.submitted.next(false);
+				this.form.reset();
+				this.router.navigate(['/success']);
+			});
 	}
 
 	delete(product) {
-		this.totalPrice -= +product.price;
-		this.cartProducts.splice(this.cartProducts.indexOf(product), 1);
-		this.dataSource.next(this.cartProducts);
-		this.productServ.countProductInCart.next(this.cartProducts.length);
-		this.cdr.detectChanges();
+		this.productServ.deleteProduct(product);
 	}
 
 	ngOnDestroy() {

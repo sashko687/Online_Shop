@@ -1,20 +1,20 @@
-<div class="container" *ngIf="cartProducts.length; else empty">
+<div class="container" *ngIf="(cartProducts| async).length; else empty">
     <h2 class="text-center">Your order:</h2>
 
-    <mat-table [dataSource]="dataSource" class="bgcolor">
+    <mat-table [dataSource]="cartProducts" class="bgcolor">
         <!-- Type  Column-->
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef> Type  </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.type}} </mat-cell>
         </ng-container>
-      
+
         <!-- Title Column -->
         <ng-container matColumnDef="title">
           <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.title}} </mat-cell>
-        
+
         </ng-container>
-       
+
          <!-- Action Column -->
         <ng-container matColumnDef="actions">
             <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
@@ -28,20 +28,20 @@
           <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
           <mat-cell *matCellDef="let r"> {{r.price}} </mat-cell>
         </ng-container>
-      
+
         <!-- Header and Row Declarations -->
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
 
     <hr>
-    <b class="right">Total: {{totalPrice}} $</b>
+    <b class="right">Total: {{totalPrice |async}} $</b>
 
     <h2 class="text-center">Delivery:</h2>
 
 
     <form [formGroup]="form" (ngSubmit)="submit()">
-    
+
         <div class="form-control">
           <mat-form-field appearance="fill" >
             <mat-label  for="name">Name</mat-label>
@@ -50,10 +50,10 @@
             <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
                 <small *ngIf="form.get('name').errors.required">Enter your name</small>
             </div>
-          </mat-form-field> 
+          </mat-form-field>
         </div>
 
-        
+
         <div class="form-control">
             <mat-form-field appearance="fill">
                 <mat-label  for="phone">Phone number</mat-label>
@@ -62,10 +62,10 @@
                 <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
                     <small *ngIf="form.get('phone').errors.required">Enter your phone number</small>
                 </div>
-              </mat-form-field> 
+              </mat-form-field>
           </div>
 
-        
+
         <div class="form-control">
             <mat-form-field appearance="fill">
                 <mat-label  for="address">Addres</mat-label>
@@ -76,7 +76,7 @@
                 </div>
               </mat-form-field>
         </div>
-        
+
         <div class="form-control">
             <mat-form-field appearance="fill">
             <mat-label for="payment">Payment method:</mat-label>
@@ -88,8 +88,8 @@
           </mat-form-field>
         </div>
 
-        <button mat-stroked-button  color="accent" type="submit" class="btn btn-primary  btn-block text-center" [disabled]="form.invalid || submitted">Add</button>
-        
+        <button mat-stroked-button  color="accent" type="submit" class="btn btn-primary  btn-block text-center" [disabled]="form.invalid || (submitted  |async)">Add</button>
+
     </form>
     <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
 </div>

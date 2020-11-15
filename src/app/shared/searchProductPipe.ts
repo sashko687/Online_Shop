@@ -3,10 +3,11 @@ import { Product } from './interfaces';
 
 @Pipe({
 	name: 'searchProduct',
+	pure: false,
 })
 export class SearchProductPipe implements PipeTransform {
 	transform(products: Product[], productName = ''): any {
-		if (!productName.trim()) {
+		if (!productName?.trim()) {
 			return products;
 		}
 

@@ -4,13 +4,11 @@ import { Injectable } from '@angular/core';
 
 export interface OrderState {
 	orders: Order[];
-	isLoaded: boolean;
 }
 
 export function createInitialState(): OrderState {
 	return {
 		orders: [],
-		isLoaded: false,
 	};
 }
 

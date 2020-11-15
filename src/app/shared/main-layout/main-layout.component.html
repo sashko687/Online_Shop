@@ -2,7 +2,7 @@
 	<nav class="navbar fixed bg-dark">
 		<div class="mobile"><a [routerLink]="['/']">Online Shop</a></div>
 		<div class="flex-center">
-			<input matInput (keyup)="applyFilter($event)" placeholder="Find..." />
+			<input (keyup)="applyFilter($event)" placeholder="Find..." />
 			<ul>
 				<li routerLinkActive="active">
 					<a  [routerLink]="['/phone']">Phone</a>
@@ -15,10 +15,10 @@
 				</li>
 				<li routerLinkActive="active">
 					<a [routerLink]="['/cart']"><span  
-						matBadge="{{productServ.countProductInCart | async}}" 
+						matBadge="{{countPdoductInCart | async}}" 
 						matBadgePosition="after" matBadgeSize="small"
 						matBadgeColor="warn" matBadgeOverlap="false"
-						[matBadgeHidden]="!(productServ.countProductInCart | async)" 
+						[matBadgeHidden]="!( countPdoductInCart | async)" 
 						(click)="toggleBadgeVisibility()"
 						>Cart</span>
 					</a>
@@ -26,22 +26,22 @@
 			</ul>
 			<div class="mobile-menu">
 				<button mat-button  [matMenuTriggerFor]="beforeMenu"><span 
-					matBadge="{{productServ.countProductInCart | async}}" 
+					matBadge="{{countPdoductInCart | async}}" 
 					matBadgePosition="after" matBadgeSize="small"
 				    matBadgeColor="warn" matBadgeOverlap="false"
-					 [matBadgeHidden]="!(productServ.countProductInCart | async)" 
+					 [matBadgeHidden]="!(countPdoductInCart | async)" 
 					 >Menu</span></button>
 				<mat-menu #beforeMenu="matMenu" xPosition="after">
-					<button mat-menu-item (click)="setType('Phone')" [routerLink]="['/phone']">Phone</button>
-					<button mat-menu-item (click)="setType('Laptop')" [routerLink]="['/laptop']">Laptop</button>
-					<button mat-menu-item (click)="setType('Tablet')" [routerLink]="['/tablet']">Tablet</button>
-					<button mat-menu-item  (click)="setType('Cart')" [routerLink]="['/cart']"><span  
-						matBadge="{{productServ.countProductInCart | async}}" 
+					<button mat-menu-item  [routerLink]="['/phone']">Phone</button>
+					<button mat-menu-item  [routerLink]="['/laptop']">Laptop</button>
+					<button mat-menu-item  [routerLink]="['/tablet']">Tablet</button>
+					<button mat-menu-item   [routerLink]="['/cart']"><span  
+						matBadge="{{countPdoductInCart | async}}" 
 						matBadgePosition="after" matBadgeSize="small"
 						 matBadgeColor="warn" matBadgeOverlap="false"
-						 [matBadgeHidden]="!(productServ.countProductInCart | async) " 
+						 [matBadgeHidden]="!(countPdoductInCart | async) " 
 						 (click)="toggleBadgeVisibility()"
-						 >Cart</span></button>
+						 >Cart</span><mat-icon>add_shopping_cart</mat-icon></button>
 				</mat-menu>
 			</div>
 		</div>

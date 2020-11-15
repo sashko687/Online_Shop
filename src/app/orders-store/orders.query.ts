@@ -14,8 +14,6 @@ export class OrdersQuery extends QueryEntity<OrderState, Order> {
 		return this.selectAll();
 	}
 
-	selectLoaded(): Observable<boolean> {
-		return this.select((state) => state.isLoaded);
-	}
+
 
 }

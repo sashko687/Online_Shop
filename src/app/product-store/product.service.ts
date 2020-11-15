@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { ProductsStore } from './product.store';
 import { FbResponse, Product } from '../shared/interfaces';
 import { environment } from 'src/environments/environment';
@@ -10,11 +11,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class ProductService {
-	type = new BehaviorSubject('Phone');
-	cartProducts: Product[] = [];
-	countProductInCart = new BehaviorSubject(0);
-	filterProduct = new BehaviorSubject('');
-
 	constructor(private http: HttpClient, private productStore: ProductsStore) {}
 
 	public create(product: Product): Observable<Product> {
@@ -58,18 +54,31 @@ export class ProductService {
 			.pipe(tap(() => this.productStore.update(product.id, product)));
 	}
 
-	public remove(id: Product): Observable<Product> {
+	public remove(id: string): Observable<Product> {
 		return this.http
 			.delete(`${environment.fbDbUrl}/products/${id}.json`)
 			.pipe(tap(() => this.productStore.remove(id)));
 	}
 
-	public setType(type: string): void {
-		this.type.next(type);
+	public addProduct(product: Product): void {
+		this.productStore.update((state) => ({
+			...state,
+			cartProducts: [...state.cartProducts, product],
+		}));
 	}
 
-	addProduct(product: Product): void {
-		this.cartProducts.push(product);
-		this.countProductInCart.next(this.cartProducts.length);
+	public deleteProduct(id: string) {
+		this.productStore.update((state) => ({
+			...state,
+			cartProducts: state.cartProducts.filter((prod) => prod.id !== id),
+		}));
+	}
+
+	public setCartEmpty() {
+		this.productStore.update({ cartProducts: [] });
+	}
+
+	public setSarchString(value: string) {
+		this.productStore.update({ searchString: value });
 	}
 }

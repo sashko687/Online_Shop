@@ -1,7 +1,8 @@
+import { state } from '@angular/animations';
+import { Product } from './../shared/interfaces';
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { Observable } from 'rxjs';
-import { Product } from '../shared/interfaces';
 import { ProductsStore, ProductState } from './product.store';
 
 @Injectable({ providedIn: 'root' })
@@ -14,11 +15,21 @@ export class ProductQuery extends QueryEntity<ProductState, Product> {
 		return this.selectAll();
 	}
 
-	selectProduct(id): Observable<Product> {
+	selectProduct(id: string): Observable<Product> {
 		return this.selectEntity(id);
 	}
 
-	selectLoaded(): Observable<boolean> {
-		return this.select((state) => state.isLoaded);
+	selectCartProduct(): Observable<Product[]> {
+		return this.select((state) => state..filter((product) => {
+			return product.title.toLowerCase().includes(state.searchString.toLowerCase());
+		}));
+	}
+
+	selectCartProductsLength() {
+		return this.select((state) => state.cartProducts?.length);
+	}
+
+	selectSearch(): Observable<string> {
+		return this.select((state) => state.searchString);
 	}
 }
