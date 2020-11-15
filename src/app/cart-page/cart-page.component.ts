@@ -64,7 +64,6 @@ export class CartPageComponent implements OnInit {
 			price: this.total.getValue(),
 			date: new Date(),
 		};
-
 		this.orderServ
 			.create(order)
 			.pipe(takeUntil(this.unSub))
