@@ -23,7 +23,7 @@ export class MainLayoutComponent implements OnInit {
 	}
 	applyFilter(event: Event) {
 		const filterValue = (event.target as HTMLInputElement).value;
-		this.productServ.setSarchString(filterValue);
+		this.productServ.setSearchString(filterValue);
 	}
 
 	toggleBadgeVisibility() {

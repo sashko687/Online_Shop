@@ -1,10 +1,11 @@
 import { state } from '@angular/animations';
+import { Product } from './../shared/interfaces';
 import { ProductsStore } from './product.store';
-import { FbResponse, Product } from '../shared/interfaces';
+import { FbResponse } from '../shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, filter } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -67,10 +68,10 @@ export class ProductService {
 		}));
 	}
 
-	public deleteProduct(id: string) {
+	public deleteProduct(product: Product): void {
 		this.productStore.update((state) => ({
 			...state,
-			cartProducts: state.cartProducts.filter((prod) => prod.id !== id),
+			cartProducts: resolve(state.cartProducts, product),
 		}));
 	}
 
@@ -78,7 +79,14 @@ export class ProductService {
 		this.productStore.update({ cartProducts: [] });
 	}
 
-	public setSarchString(value: string) {
+	public setSearchString(value: string) {
 		this.productStore.update({ searchString: value });
 	}
+}
+
+function resolve(state: Product[], product: Product) {
+	const ids = state.filter((prod) => prod.id === product.id);
+	const notId = state.filter((prod) => prod.id !== product.id);
+	ids.shift();
+	return notId.concat(ids);
 }

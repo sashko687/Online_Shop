@@ -1,14 +1,14 @@
+import { Order } from './../admin/order.interface';
 import { ProductQuery } from './../product-store/product.query';
 import { ProductsStore } from './../product-store/product.store';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Product } from './../shared/interfaces';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProductService } from '../product-store/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../orders-store/order.service';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
 
 @Component({
 	selector: 'app-cart-page',
@@ -22,6 +22,8 @@ export class CartPageComponent implements OnInit {
 	added = '';
 	unSub = new Subject();
 	displayedColumns = ['type', 'title', 'actions', 'price'];
+	orders = new BehaviorSubject<Product[]>([]);
+	total = new BehaviorSubject<number>(0);
 
 	form: FormGroup;
 	submitted = new BehaviorSubject(false);
@@ -35,8 +37,9 @@ export class CartPageComponent implements OnInit {
 
 	ngOnInit() {
 		this.cartProducts = this.productQuery.selectCartProduct();
-		this.totalPrice = this.cartProducts.pipe(map((list) => list.reduce((acc, value) => acc += +value.price, 0)));
-
+		this.totalPrice = this.cartProducts.pipe(map((list) => list.reduce((acc, value) => (acc += +value.price), 0)));
+		this.cartProducts.subscribe((order) => this.orders?.next(order));
+		this.totalPrice.subscribe((price) => this.total?.next(price));
 		this.form = new FormGroup({
 			name: new FormControl(null, Validators.required),
 			phone: new FormControl(null, Validators.required),
@@ -57,15 +60,15 @@ export class CartPageComponent implements OnInit {
 			phone: this.form.value.phone,
 			address: this.form.value.address,
 			payment: this.form.value.payment,
-			orders: this.cartProducts,
-			price: this.totalPrice,
+			orders: this.orders.getValue(),
+			price: this.total.getValue(),
 			date: new Date(),
 		};
 
 		this.orderServ
 			.create(order)
 			.pipe(takeUntil(this.unSub))
-			.subscribe((res) => {
+			.subscribe(() => {
 				this.productServ.setCartEmpty();
 				this.added = 'Delivery is framed!';
 				this.submitted.next(false);

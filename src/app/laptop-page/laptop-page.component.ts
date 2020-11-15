@@ -5,19 +5,18 @@ import { ProductService } from '../product-store/product.service';
 import { Product } from '../shared/interfaces';
 
 @Component({
-  selector: 'app-laptop-page',
-  templateUrl: './laptop-page.component.html',
-  styleUrls: ['./laptop-page.component.scss']
+	selector: 'app-laptop-page',
+	templateUrl: './laptop-page.component.html',
+	styleUrls: ['./laptop-page.component.scss'],
 })
 export class LaptopPageComponent implements OnInit {
 	products$: Observable<Product[]>;
-	constructor(
-		public productServ: ProductService,
-		public productQuery: ProductQuery,
-		) {}
+	searchProduct$: Observable<string>;
+	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {
-		this.products$ = this.productQuery.selectProducts()
+		this.products$ = this.productQuery.selectProducts();
+		this.searchProduct$ = this.productQuery.selectSearch();
 		if (!this.productQuery.getHasCache()) {
 			this.productServ.getAll().subscribe();
 		}

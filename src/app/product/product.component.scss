@@ -4,3 +4,11 @@ width: 80%  ;
 background-color: var(--btn-bgcolor);
 color: var(--btn-color);
 }
+
+.info{
+  transition: all .2s ease-in-out;
+}
+
+.info:hover{
+  transform: scale(1.05);
+}

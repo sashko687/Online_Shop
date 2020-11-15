@@ -11,10 +11,12 @@ import { Product } from '../shared/interfaces';
 })
 export class PhohePageComponent implements OnInit {
 	products$: Observable<Product[]>;
+	searchProduct$: Observable<string>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {
 		this.products$ = this.productQuery.selectProducts();
+		this.searchProduct$ = this.productQuery.selectSearch();
 		if (!this.productQuery.getHasCache()) {
 			this.productServ.getAll().subscribe();
 		}

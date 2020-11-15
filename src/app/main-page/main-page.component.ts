@@ -12,7 +12,7 @@ import { ProductService } from '../product-store/product.service';
 })
 export class MainPageComponent implements OnInit {
 	products$: Observable<Product[]>;
-	searchProduct$;
+	searchProduct$: Observable<string>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {

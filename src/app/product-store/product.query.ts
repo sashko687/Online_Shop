@@ -20,9 +20,7 @@ export class ProductQuery extends QueryEntity<ProductState, Product> {
 	}
 
 	selectCartProduct(): Observable<Product[]> {
-		return this.select((state) => state..filter((product) => {
-			return product.title.toLowerCase().includes(state.searchString.toLowerCase());
-		}));
+		return this.select((state) => state.cartProducts);
 	}
 
 	selectCartProductsLength() {
