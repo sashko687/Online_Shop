@@ -1,25 +1,25 @@
-<nav class="navbar bg-dark">
-  <h1><a routerLink="/">OnlineShop</a></h1>
+<nav class="navbar fixed bg-dark">
+  <h1><a [routerLink]="['/']">Online Shop</a></h1>
   <ul *ngIf="(logged |async);else login">
     <li routerLinkActive="active" >
         <a [routerLink]="['/admin','dashboard']">Dashboard</a>
-    </li>  
+    </li>
     <li routerLinkActive="active" >
         <a [routerLink]="['/admin','add']">Add product</a>
-    </li>  
+    </li>
     <li routerLinkActive="active" >
         <a [routerLink]="['/admin','orders']">Orders</a>
-    </li>  
+    </li>
     <li routerLinkActive="active" >
         <a href="#" (click)="logout($event)">Logout</a>
-    </li>  
+    </li>
   </ul>
 
   <ng-template #login>
     <ul>
         <li routerLinkActive="active" >
             <a [routerLink]="['/admin','login']">Login</a>
-        </li>  
+        </li>
     </ul>
   </ng-template>
 </nav>

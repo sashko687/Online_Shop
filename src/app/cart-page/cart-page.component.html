@@ -1,7 +1,7 @@
-<div class="container" *ngIf="(cartProducts| async).length; else empty">
+<div class="container" *ngIf="(cartProducts$| async).length; else empty">
     <h2 class="text-center">Your order:</h2>
 
-    <mat-table [dataSource]="cartProducts" class="bgcolor">
+    <mat-table [dataSource]="cartProducts$" class="bgcolor">
         <!-- Type  Column-->
         <ng-container matColumnDef="type">
           <mat-header-cell *matHeaderCellDef> Type  </mat-header-cell>
@@ -35,7 +35,7 @@
       </mat-table>
 
     <hr>
-    <b class="right">Total: {{totalPrice |async}} $</b>
+    <b class="right">Total: {{totalPrice$ |async}} $</b>
 
     <h2 class="text-center">Delivery:</h2>
 
@@ -91,10 +91,12 @@
         <button mat-stroked-button  color="accent" type="submit" class="btn btn-primary  btn-block text-center" [disabled]="form.invalid || (submitted  |async)">Add</button>
 
     </form>
-    <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
 </div>
 
 <ng-template #empty>
+  <div class="header right">
+    <button mat-stroked-button routerLink="/" class="btn btn-dark">Back to Shop</button>
+</div>
   <div class="cart-emty"><h2 class="text-center">Cart is empty, select product</h2></div>
 </ng-template>
 

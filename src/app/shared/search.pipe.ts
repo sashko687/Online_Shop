@@ -5,7 +5,7 @@ import { Product } from './interfaces';
 	name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-	transform(products: Product[], productName = ''): any {
+	transform(products: Product[], productName = ''): Product[] {
 		if (!productName.trim()) {
 			return products;
 		}

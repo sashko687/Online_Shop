@@ -130,7 +130,7 @@ img {
   transition: opacity 0.2s ease-in;
   outline: none;
   border-radius: .5rem;
- 
+
 
   &:disabled {
     cursor: not-allowed;
@@ -326,10 +326,16 @@ mat-form-field{
   width: 100%;
 }
 .dashboard {
-  display: flex; 
+  display: flex;
   flex-wrap: wrap;
   }
-  .box{
+.box{
   width: 33.3%;
   margin-top: 2rem;
+  }
+  @media (max-width:767px){
+    .box{
+      width: 100%;
+      margin-top: 1rem;
+      }
   }

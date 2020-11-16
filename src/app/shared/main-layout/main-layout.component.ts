@@ -14,12 +14,11 @@ import { ProductService } from 'src/app/product-store/product.service';
 export class MainLayoutComponent implements OnInit {
 	type = 'Phone';
 	hidden = false;
-	countPdoductInCart
-  constructor(public productServ: ProductService,
-     public productQuery: ProductQuery) {}
+	countPdoductInCart;
+	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {
-		this.countPdoductInCart = this.productQuery.selectCartProductsLength()
+		this.countPdoductInCart = this.productQuery.selectCartProductsLength();
 	}
 	applyFilter(event: Event) {
 		const filterValue = (event.target as HTMLInputElement).value;
@@ -29,6 +28,4 @@ export class MainLayoutComponent implements OnInit {
 	toggleBadgeVisibility() {
 		this.hidden = !this.hidden;
 	}
-
-
 }

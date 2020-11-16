@@ -1,21 +1,21 @@
-import { state } from '@angular/animations';
 import { Product } from './../shared/interfaces';
 import { ProductsStore } from './product.store';
 import { FbResponse } from '../shared/interfaces';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap, filter } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ProductService {
+	baseUrl = environment.fbDbUrl
 	constructor(private http: HttpClient, private productStore: ProductsStore) {}
 
 	public create(product: Product): Observable<Product> {
-		return this.http.post(`${environment.fbDbUrl}/products.json`, product).pipe(
+		return this.http.post(`${this.baseUrl}/products.json`, product).pipe(
 			map((res: FbResponse) => {
 				return {
 					...product,
@@ -28,7 +28,7 @@ export class ProductService {
 	}
 
 	public getAll(): Observable<Product[]> {
-		return this.http.get(`${environment.fbDbUrl}/products.json`).pipe(
+		return this.http.get(`${this.baseUrl}/products.json`).pipe(
 			map((res) => {
 				return Object.keys(res).map((key) => ({
 					...res[key],
@@ -41,7 +41,7 @@ export class ProductService {
 	}
 
 	public getById(id: string): Observable<any> {
-		return this.http.get(`${environment.fbDbUrl}/products/${id}.json`).pipe(
+		return this.http.get(`${this.baseUrl}/products/${id}.json`).pipe(
 			map((res: Product) => {
 				return { ...res, id, date: new Date(res.date) };
 			}),
@@ -51,13 +51,13 @@ export class ProductService {
 
 	public update(product: Product): Observable<Product> {
 		return this.http
-			.patch(`${environment.fbDbUrl}/products/${product.id}.json`, product)
+			.patch(`${this.baseUrl}/products/${product.id}.json`, product)
 			.pipe(tap(() => this.productStore.update(product.id, product)));
 	}
 
 	public remove(id: string): Observable<Product> {
 		return this.http
-			.delete(`${environment.fbDbUrl}/products/${id}.json`)
+			.delete(`${this.baseUrl}/products/${id}.json`)
 			.pipe(tap(() => this.productStore.remove(id)));
 	}
 
@@ -71,22 +71,24 @@ export class ProductService {
 	public deleteProduct(product: Product): void {
 		this.productStore.update((state) => ({
 			...state,
-			cartProducts: resolve(state.cartProducts, product),
+			cartProducts: this.resolveNewListProductInCart(state.cartProducts, product),
 		}));
 	}
 
-	public setCartEmpty() {
+	public setCartEmpty(): void {
 		this.productStore.update({ cartProducts: [] });
 	}
 
-	public setSearchString(value: string) {
+	public setSearchString(value: string): void {
 		this.productStore.update({ searchString: value });
 	}
-}
 
-function resolve(state: Product[], product: Product) {
-	const ids = state.filter((prod) => prod.id === product.id);
-	const notId = state.filter((prod) => prod.id !== product.id);
-	ids.shift();
-	return notId.concat(ids);
+	private resolveNewListProductInCart(state: Product[], product: Product): Product[] {
+		const newState: Product[] = [];
+		let idRemove = product.id;
+		state.forEach((item) => {
+			item.id === idRemove ? (idRemove = null) : newState.push(item);
+		});
+		return newState;
+	}
 }

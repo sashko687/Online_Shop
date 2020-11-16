@@ -1,14 +1,23 @@
 .btn{
 margin: 1rem .5rem 0;
-width: 80%  ;
+width: 70%  ;
 background-color: var(--btn-bgcolor);
 color: var(--btn-color);
 }
 
 .info{
   transition: all .2s ease-in-out;
+  padding-bottom: 2rem;
+  padding: 1rem;
 }
 
 .info:hover{
-  transform: scale(1.05);
+  transform: scale(1.02);
+
+}
+hr{
+  align-self: center;
+  width: 100%;
+  margin-top: 2rem;
+  margin-left: auto 0;
 }
