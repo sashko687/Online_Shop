@@ -13,9 +13,9 @@ import { BehaviorSubject } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPageComponent implements OnInit {
-	submitted = new BehaviorSubject(false);
-	form: FormGroup;
-	product: Product;
+	public submitted = new BehaviorSubject(false);
+	public form: FormGroup;
+	public product: Product;
 
 	constructor(
 		private productServ: ProductService,

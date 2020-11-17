@@ -11,8 +11,8 @@ import { Product } from '../shared/interfaces';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaptopPageComponent implements OnInit {
-	products$: Observable<Product[]>;
-	searchProduct$: Observable<string>;
+	public products$: Observable<Product[]>;
+	public searchProduct$: Observable<string>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {

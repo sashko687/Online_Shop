@@ -1,9 +1,7 @@
 import { ProductQuery } from './../../product-store/product.query';
-import { BehaviorSubject } from 'rxjs';
-import { SessionService } from './../../state/session.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy,Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/product-store/product.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-main-layout',
@@ -12,9 +10,9 @@ import { ProductService } from 'src/app/product-store/product.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent implements OnInit {
-	type = 'Phone';
-	hidden = false;
-	countPdoductInCart;
+public	type = 'Phone';
+public	hidden = false;
+public	countPdoductInCart: Observable<number>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {

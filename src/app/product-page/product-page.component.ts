@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductPageComponent implements OnInit {
-	product$: Observable<Product>;
+	public product$: Observable<Product>;
 
 	constructor(
 		private productServ: ProductService,

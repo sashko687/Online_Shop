@@ -11,8 +11,8 @@ import { ProductService } from 'src/app/product-store/product.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPageComponent implements OnInit {
-	form: FormGroup;
-	submitted = new BehaviorSubject(false);
+	public form: FormGroup;
+	public submitted = new BehaviorSubject(false);
 	constructor(private productServ: ProductService, private router: Router) {}
 
 	ngOnInit(): void {
@@ -24,7 +24,8 @@ export class AddPageComponent implements OnInit {
 			price: new FormControl(null, Validators.required),
 		});
 	}
-public submit(): void {
+
+	public submit(): void {
 		if (this.form.invalid) {
 			return;
 		}
@@ -39,6 +40,7 @@ public submit(): void {
 			price: this.form.value.price,
 			date: new Date(),
 		};
+
 		this.productServ.create(product).subscribe((res) => {
 			this.form.reset();
 			this.submitted.next(false);

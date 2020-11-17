@@ -11,8 +11,8 @@ import { ProductService } from '../product-store/product.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPageComponent implements OnInit {
-	products$: Observable<Product[]>;
-	searchProduct$: Observable<string>;
+public	products$: Observable<Product[]>;
+public	searchProduct$: Observable<string>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {

@@ -1,7 +1,7 @@
 import { Order } from './../order.interface';
 import { OrdersQuery } from './../../orders-store/orders.query';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { OrderService } from 'src/app/orders-store/order.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -12,27 +12,25 @@ import { takeUntil } from 'rxjs/operators';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersPageComponent implements OnInit, OnDestroy {
-	displayedColumns: string[] = ['date', 'phone', 'name', 'address', 'orders', 'price', 'status'];
-	orders: Order[] = [];
-	orders$: Observable<Order[]>;
-	pSub$ = new Subject();
-	loading = false;
+public	displayedColumns: string[] = ['date', 'phone', 'name', 'address', 'orders', 'price', 'status'];
+public	orders$: Observable<Order[]>;
+private	pSub$ = new Subject();
 
 	constructor(private orderServ: OrderService, private ordersQuery: OrdersQuery) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.orders$ = this.ordersQuery.selectOrders();
 		if (!this.ordersQuery.getHasCache()) {
 			this.orderServ.getAll().subscribe();
 		}
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy(): void {
 		this.pSub$.next();
 		this.pSub$.complete();
 	}
 
-	public remove(id): void {
+	public remove(id: string): void {
 		this.orderServ.remove(id).pipe(takeUntil(this.pSub$)).subscribe();
 	}
 }

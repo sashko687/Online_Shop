@@ -1,5 +1,5 @@
 import { Product } from './../shared/interfaces';
-import { Component, Input, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ProductService } from '../product-store/product.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ProductService } from '../product-store/product.service';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
-	@Input() product;
+	@Input() product: Product;
 
 	constructor(
 		private productServ: ProductService,
@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	addProduct(product : Product):  void{
+public addProduct(product : Product):  void{
 		this.productServ.addProduct(product);
 	}
 }

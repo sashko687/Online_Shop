@@ -12,12 +12,15 @@ import { Observable } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminLayoutComponent implements OnInit {
+	public logged: Observable<any>;
+
 	constructor(public sessionServ: SessionService, public sessionQuery: SessionQuery, public router: Router) {}
-	logged: Observable<any>;
+
 	ngOnInit(): void {
 		this.logged = this.sessionQuery.isLoggedIn$;
 	}
-	logout(event) {
+
+	public logout(event): void {
 		event.preventDefault();
 		this.sessionServ.logout();
 		this.router.navigate(['/admin', 'login']);

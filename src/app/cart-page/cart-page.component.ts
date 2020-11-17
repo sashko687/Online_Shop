@@ -1,4 +1,3 @@
-import { Order } from './../admin/order.interface';
 import { ProductQuery } from './../product-store/product.query';
 import { takeUntil, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -16,13 +15,13 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartPageComponent implements OnInit {
-	cartProducts$: Observable<Product[]>;
-	totalPrice$: Observable<number>;
-	unSub = new Subject();
-	displayedColumns = ['type', 'title', 'actions', 'price'];
+	public cartProducts$: Observable<Product[]>;
+	public totalPrice$: Observable<number>;
+	private unSub = new Subject();
+	public displayedColumns = ['type', 'title', 'actions', 'price'];
 
-	form: FormGroup;
-	submitted = new BehaviorSubject(false);
+	public form: FormGroup;
+	public submitted = new BehaviorSubject(false);
 
 	constructor(
 		private productServ: ProductService,
@@ -33,7 +32,9 @@ export class CartPageComponent implements OnInit {
 
 	ngOnInit() {
 		this.cartProducts$ = this.productQuery.selectCartProduct();
-		this.totalPrice$ = this.cartProducts$.pipe(map((list) => list.reduce((acc, value) => (acc += +value.price), 0)));
+		this.totalPrice$ = this.cartProducts$.pipe(
+			map((list) => list.reduce((acc, value) => (acc += +value.price), 0))
+		);
 		this.form = new FormGroup({
 			name: new FormControl(null, Validators.required),
 			phone: new FormControl(null, Validators.required),
@@ -55,7 +56,7 @@ export class CartPageComponent implements OnInit {
 			address: this.form.value.address,
 			payment: this.form.value.payment,
 			orders: this.productQuery.getValue().cartProducts,
-			price: this.productQuery.getValue().cartProducts.reduce((acc,value)=> acc += +value.price, 0),
+			price: this.productQuery.getValue().cartProducts.reduce((acc, value) => (acc += +value.price), 0),
 			date: new Date(),
 		};
 		this.orderServ
