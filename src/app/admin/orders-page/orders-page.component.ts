@@ -15,7 +15,7 @@ export class OrdersPageComponent implements OnInit, OnDestroy {
 	displayedColumns: string[] = ['date', 'phone', 'name', 'address', 'orders', 'price', 'status'];
 	orders: Order[] = [];
 	orders$: Observable<Order[]>;
-	private pSub$ = new Subject();
+	pSub$ = new Subject();
 	loading = false;
 
 	constructor(private orderServ: OrderService, private ordersQuery: OrdersQuery) {}

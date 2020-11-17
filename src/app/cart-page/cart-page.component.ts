@@ -1,6 +1,5 @@
 import { Order } from './../admin/order.interface';
 import { ProductQuery } from './../product-store/product.query';
-import { ProductsStore } from './../product-store/product.store';
 import { takeUntil, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Product } from './../shared/interfaces';
@@ -70,7 +69,7 @@ export class CartPageComponent implements OnInit {
 			});
 	}
 
-	public delete(product: Product) {
+	public delete(product: Product): void {
 		this.productServ.deleteProduct(product);
 	}
 

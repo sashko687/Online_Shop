@@ -1,7 +1,7 @@
 import { ProductQuery } from './../product-store/product.query';
 import { Product } from './../shared/interfaces';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {  Observable } from 'rxjs';
 import { ProductService } from '../product-store/product.service';
 
 @Component({

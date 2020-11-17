@@ -15,9 +15,7 @@ export class LoginPageComponent implements OnInit {
 	form: FormGroup;
 	submitted = new BehaviorSubject(false);
 
-	constructor(
-		public session : SessionService,
-		 public router: Router) {}
+	constructor(public session: SessionService, public router: Router) {}
 
 	ngOnInit(): void {
 		this.form = new FormGroup({
@@ -38,7 +36,7 @@ export class LoginPageComponent implements OnInit {
 			returnSecureToken: true,
 		};
 		this.session.login(user).subscribe(
-			(res) => {
+			() => {
 				this.form.reset();
 				this.router.navigate(['/admin', 'dashboard']);
 				this.submitted.next(false);

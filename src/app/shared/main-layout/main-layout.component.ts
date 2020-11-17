@@ -20,12 +20,12 @@ export class MainLayoutComponent implements OnInit {
 	ngOnInit(): void {
 		this.countPdoductInCart = this.productQuery.selectCartProductsLength();
 	}
-	applyFilter(event: Event) {
+	public applyFilter(event: Event): void {
 		const filterValue = (event.target as HTMLInputElement).value;
 		this.productServ.setSearchString(filterValue);
 	}
 
-	toggleBadgeVisibility() {
+	public toggleBadgeVisibility(): void {
 		this.hidden = !this.hidden;
 	}
 }

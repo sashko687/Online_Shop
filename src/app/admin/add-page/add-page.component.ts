@@ -24,7 +24,7 @@ export class AddPageComponent implements OnInit {
 			price: new FormControl(null, Validators.required),
 		});
 	}
-	submit() {
+public submit(): void {
 		if (this.form.invalid) {
 			return;
 		}

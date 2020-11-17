@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductQuery } from '../product-store/product.query';
 import { ProductService } from '../product-store/product.service';
@@ -8,6 +8,7 @@ import { Product } from '../shared/interfaces';
 	selector: 'app-tablet-page',
 	templateUrl: './tablet-page.component.html',
 	styleUrls: ['./tablet-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabletPageComponent implements OnInit {
 	products$: Observable<Product[]>;
@@ -16,7 +17,7 @@ export class TabletPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.products$ = this.productQuery.selectProducts();
-		this.searchProduct$ = this.productQuery.selectSearch()
+		this.searchProduct$ = this.productQuery.selectSearch();
 		if (!this.productQuery.getHasCache()) {
 			this.productServ.getAll().subscribe();
 		}
