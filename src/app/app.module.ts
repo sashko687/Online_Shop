@@ -1,13 +1,12 @@
-import { SearchPipe } from './shared/search.pipe';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +18,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ProductComponent } from './product/product.component';
-import { SortingPipe } from './shared/sorting.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -29,14 +27,15 @@ import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { SuccesOrderComponent } from './succes-order/succes-order.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { PhohePageComponent } from './phohe-page/phohe-page.component';
 import { LaptopPageComponent } from './laptop-page/laptop-page.component';
 import { TabletPageComponent } from './tablet-page/tablet-page.component';
-import { SearchProductPipe } from './shared/searchProductPipe';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { SearchModule } from './search-pipe/search.module';
+import { SortingPipeModule } from './sorting-pipe/sorting-pipe.module';
 
 @NgModule({
 	declarations: [
@@ -46,14 +45,14 @@ import {MatBadgeModule} from '@angular/material/badge';
 		ProductPageComponent,
 		CartPageComponent,
 		ProductComponent,
-		SearchProductPipe,
-		SortingPipe,
 		SuccesOrderComponent,
 		PhohePageComponent,
 		LaptopPageComponent,
 		TabletPageComponent,
 	],
 	imports: [
+		SortingPipeModule,
+		SearchModule,
 		MatBadgeModule,
 		MatMenuModule,
 		MatNativeDateModule,
@@ -76,7 +75,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 		BrowserAnimationsModule,
 		environment.production ? [] : AkitaNgDevtools.forRoot(),
-		AkitaNgRouterStoreModule.forRoot()
+		AkitaNgRouterStoreModule.forRoot(),
 	],
 	providers: [
 		{
@@ -85,7 +84,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 			useClass: AuthInterceptor,
 		},
 		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-		{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }},
+		{ provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' } },
 	],
 	bootstrap: [AppComponent],
 })

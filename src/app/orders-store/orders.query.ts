@@ -10,7 +10,7 @@ export class OrdersQuery extends QueryEntity<OrderState, Order> {
 		super(store);
 	}
 
-	selectOrders(): Observable<Order[]> {
+public 	selectOrders(): Observable<Order[]> {
 		return this.selectAll();
 	}
 

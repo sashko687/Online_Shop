@@ -1,4 +1,4 @@
-<div *ngIf="products.length; else loading">
+<div *ngIf="(products$ |async).length; else loading">
     <h2 class="text-center">Dashboard of products</h2>
 
     <div class="form-control">
@@ -7,7 +7,7 @@
         </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="products | search: productName" >
+    <table mat-table [dataSource]="products$ | async | searchProduct: productName" >
 
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->

@@ -47,8 +47,11 @@
         </div>
     </mat-form-field>
 	</div>
-	<button mat-raised-button color="primary" type="submit" class="btn btn-block" [disabled]="form.invalid || (submitted |async)">Update</button>
-    
+  <button
+   mat-raised-button color="primary"
+   type="submit" class="btn btn-block"
+   [disabled]="form.invalid || (submitted$ |async)">Update</button>
+
 
 </form>
 </div>

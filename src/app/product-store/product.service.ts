@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class ProductService {
-	baseUrl = environment.fbDbUrl
+	private baseUrl = environment.fbDbUrl;
+
 	constructor(private http: HttpClient, private productStore: ProductsStore) {}
 
 	public create(product: Product): Observable<Product> {
@@ -56,9 +57,7 @@ export class ProductService {
 	}
 
 	public remove(id: string): Observable<Product> {
-		return this.http
-			.delete(`${this.baseUrl}/products/${id}.json`)
-			.pipe(tap(() => this.productStore.remove(id)));
+		return this.http.delete(`${this.baseUrl}/products/${id}.json`).pipe(tap(() => this.productStore.remove(id)));
 	}
 
 	public addProduct(product: Product): void {

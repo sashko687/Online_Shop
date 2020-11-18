@@ -10,7 +10,6 @@ import { EditPageComponent } from './edit-page/edit-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../shared/auth.guard';
 import { QuillModule } from 'ngx-quill';
-import { SearchPipe } from '../shared/search.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -18,7 +17,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SearchModule } from '../search-pipe/search.module';
 
 @NgModule({
 	declarations: [
@@ -28,9 +28,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 		AddPageComponent,
 		EditPageComponent,
 		OrdersPageComponent,
-		SearchPipe,
 	],
 	imports: [
+		SearchModule,
 		MatProgressSpinnerModule,
 		MatPaginatorModule,
 		MatInputModule,
@@ -50,9 +50,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 				path: '',
 				component: AdminLayoutComponent,
 				children: [
-					{ path: '', redirectTo: '/admin/dashboard', pathMatch: 'full', canActivate: [AuthGuard]  },
-					{ path: 'login', component: LoginPageComponent  },
-					{ path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]  },
+					{ path: '', redirectTo: '/admin/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+					{ path: 'login', component: LoginPageComponent },
+					{ path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
 					{ path: 'add', component: AddPageComponent, canActivate: [AuthGuard] },
 					{ path: 'orders', component: OrdersPageComponent, canActivate: [AuthGuard] },
 					{ path: 'product/:id/edit', component: EditPageComponent, canActivate: [AuthGuard] },

@@ -6,16 +6,10 @@ export interface OrderState {
 	orders: Order[];
 }
 
-export function createInitialState(): OrderState {
-	return {
-		orders: [],
-	};
-}
-
 @StoreConfig({ name: 'orders' })
 @Injectable({ providedIn: 'root' })
 export class OrdersStore extends EntityStore<OrderState> {
 	constructor() {
-		super(createInitialState());
+		super({ orders: [] });
 	}
 }

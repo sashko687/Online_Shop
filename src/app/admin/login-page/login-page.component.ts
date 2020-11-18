@@ -11,9 +11,9 @@ import { BehaviorSubject } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent implements OnInit {
-	public hide = true;
+	public hide: boolean = true;
 	public form: FormGroup;
-	public submitted = new BehaviorSubject(false);
+	public submitted$ = new BehaviorSubject(false);
 
 	constructor(public session: SessionService, public router: Router) {}
 
@@ -24,12 +24,12 @@ export class LoginPageComponent implements OnInit {
 		});
 	}
 
-	submit() {
+public	submit(): void {
 		if (this.form.invalid) {
 			return;
 		}
 
-		this.submitted.next(true);
+		this.submitted$.next(true);
 
 		const user = {
 			email: this.form.value.email,
@@ -40,10 +40,10 @@ export class LoginPageComponent implements OnInit {
 			() => {
 				this.form.reset();
 				this.router.navigate(['/admin', 'dashboard']);
-				this.submitted.next(false);
+				this.submitted$.next(false);
 			},
 			() => {
-				this.submitted.next(false);
+				this.submitted$.next(false);
 			}
 		);
 	}

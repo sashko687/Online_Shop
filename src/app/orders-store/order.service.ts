@@ -1,4 +1,4 @@
-import { Order } from '../admin/order.interface';
+import { Order } from './../admin/order.interface';
 import { OrdersStore } from './orders.store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,10 +11,11 @@ import { Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class OrderService {
+	private baseUrl = environment.fbDbUrl;
 	constructor(private http: HttpClient, private ordersStore: OrdersStore) {}
 
-	create(order): Observable<Order> {
-		return this.http.post(`${environment.fbDbUrl}/orders.json`, order).pipe(
+	public create(order: Order): Observable<Order> {
+		return this.http.post(`${this.baseUrl}/orders.json`, order).pipe(
 			map((res: FbResponse) => {
 				return {
 					...order,
@@ -26,8 +27,8 @@ export class OrderService {
 		);
 	}
 
-	getAll(): Observable<Order[]> {
-		return this.http.get(`${environment.fbDbUrl}/orders.json`).pipe(
+	public getAll(): Observable<Order[]> {
+		return this.http.get(`${this.baseUrl}/orders.json`).pipe(
 			map((res) => {
 				return Object.keys(res).map((key) => ({
 					...res[key],
@@ -39,9 +40,7 @@ export class OrderService {
 		);
 	}
 
-	remove(id: string): Observable<any> {
-		return this.http
-			.delete(`${environment.fbDbUrl}/orders/${id}.json`)
-			.pipe(tap(() => this.ordersStore.remove(id)));
+	public remove(id: string): Observable<Order> {
+		return this.http.delete(`${this.baseUrl}/orders/${id}.json`).pipe(tap(() => this.ordersStore.remove(id)));
 	}
 }

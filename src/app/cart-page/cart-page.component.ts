@@ -7,6 +7,7 @@ import { ProductService } from '../product-store/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from '../orders-store/order.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Order } from '../admin/order.interface';
 
 @Component({
 	selector: 'app-cart-page',
@@ -17,7 +18,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class CartPageComponent implements OnInit {
 	public cartProducts$: Observable<Product[]>;
 	public totalPrice$: Observable<number>;
-	private unSub = new Subject();
+	private unSub$ = new Subject();
 	public displayedColumns = ['type', 'title', 'actions', 'price'];
 
 	public form: FormGroup;
@@ -50,7 +51,7 @@ export class CartPageComponent implements OnInit {
 
 		this.submitted.next(true);
 
-		const order = {
+		const order: Order = {
 			name: this.form.value.name,
 			phone: this.form.value.phone,
 			address: this.form.value.address,
@@ -61,7 +62,7 @@ export class CartPageComponent implements OnInit {
 		};
 		this.orderServ
 			.create(order)
-			.pipe(takeUntil(this.unSub))
+			.pipe(takeUntil(this.unSub$))
 			.subscribe(() => {
 				this.productServ.setCartEmpty();
 				this.submitted.next(false);
@@ -75,7 +76,7 @@ export class CartPageComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-		this.unSub.next();
-		this.unSub.complete();
+		this.unSub$.next();
+		this.unSub$.complete();
 	}
 }

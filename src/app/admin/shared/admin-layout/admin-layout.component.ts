@@ -1,4 +1,3 @@
-import { User } from './../../../state/session.store';
 import { SessionService } from './../../../state/session.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -12,7 +11,7 @@ import { Observable } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminLayoutComponent implements OnInit {
-	public logged: Observable<any>;
+	public logged: Observable<boolean>;
 
 	constructor(public sessionServ: SessionService, public sessionQuery: SessionQuery, public router: Router) {}
 
@@ -20,10 +19,9 @@ export class AdminLayoutComponent implements OnInit {
 		this.logged = this.sessionQuery.isLoggedIn$;
 	}
 
-	public logout(event): void {
+	public logout(event: MouseEvent): void {
 		event.preventDefault();
 		this.sessionServ.logout();
 		this.router.navigate(['/admin', 'login']);
-		localStorage.clear();
 	}
 }

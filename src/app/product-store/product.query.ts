@@ -11,23 +11,23 @@ export class ProductQuery extends QueryEntity<ProductState, Product> {
 		super(store);
 	}
 
-	selectProducts(): Observable<Product[]> {
+public	selectProducts(): Observable<Product[]> {
 		return this.selectAll();
 	}
 
-	selectProduct(id: string): Observable<Product> {
+public	selectProduct(id: string): Observable<Product> {
 		return this.selectEntity(id);
 	}
 
-	selectCartProduct(): Observable<Product[]> {
+public	selectCartProduct(): Observable<Product[]> {
 		return this.select((state) => state.cartProducts);
 	}
 
-	selectCartProductsLength() {
+public	selectCartProductsLength(): Observable<number> {
 		return this.select((state) => state.cartProducts?.length);
 	}
 
-	selectSearch(): Observable<string> {
+public	selectSearch(): Observable<string> {
 		return this.select((state) => state.searchString);
 	}
 }

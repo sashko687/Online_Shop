@@ -13,7 +13,7 @@
         </div>
     </mat-form-field>
     </div>
-    
+
     <div class="form-control">
         <mat-form-field appearance="fill">
         <mat-label for="password">Password</mat-label>
@@ -24,13 +24,13 @@
         <div *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
             <small *ngIf="form.get('password').errors.required">Please! Enter password</small>
             <small *ngIf="form.get('password').errors.minlength">
-                Password must be at least  {{form.get('password').errors.minlength.requiredLength}} characters. 
+                Password must be at least  {{form.get('password').errors.minlength.requiredLength}} characters.
                 Now it is {{form.get('password').errors.minlength.actualLength}}
             </small>
         </div>
     </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || (submitted | async)">Logon</button>
-    
+    <button mat-raised-button color="primary" type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || (submitted$ | async)">Logon</button>
+
 
 </form>

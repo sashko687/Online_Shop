@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPageComponent implements OnInit {
-	public submitted = new BehaviorSubject(false);
+	public submitted$ = new BehaviorSubject(false);
 	public form: FormGroup;
 	public product: Product;
 
@@ -48,7 +48,7 @@ export class EditPageComponent implements OnInit {
 		if (this.form.invalid) {
 			return;
 		}
-		this.submitted.next(true);
+		this.submitted$.next(true);
 
 		this.productServ
 			.update({
@@ -61,7 +61,7 @@ export class EditPageComponent implements OnInit {
 				date: new Date(),
 			})
 			.subscribe((res) => {
-				this.submitted.next(false);
+				this.submitted$.next(false);
 				this.router.navigate(['/admin', 'dashboard']);
 			});
 	}

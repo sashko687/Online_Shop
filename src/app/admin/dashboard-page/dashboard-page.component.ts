@@ -1,7 +1,8 @@
-import { takeUntil } from 'rxjs/operators';
+import { ProductQuery } from './../../product-store/product.query';
+import { take, takeUntil } from 'rxjs/operators';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/product-store/product.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Product } from 'src/app/shared/interfaces';
 
 @Component({
@@ -11,35 +12,26 @@ import { Product } from 'src/app/shared/interfaces';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
-	public products: Product[] = [];
-	private pSub = new Subject();
+	public products$: Observable<Product[]>;
+	private pSub$ = new Subject();
 	public productName: string;
 	public displayedColumns: string[] = ['id', 'title', 'price', 'date', 'edit', 'delete'];
 
-	constructor(private productServ: ProductService, private cdr: ChangeDetectorRef) {}
+	constructor(private productServ: ProductService, private productQuery: ProductQuery) {}
 
-	ngOnInit() {
-		this.productServ
-			.getAll()
-			.pipe(takeUntil(this.pSub))
-			.subscribe((products) => {
-				this.products = products;
-				this.cdr.detectChanges();
-			});
+	ngOnInit(): void {
+		this.products$ = this.productQuery.selectProducts();
+		if (!this.productQuery.getHasCache()) {
+			this.productServ.getAll().pipe(takeUntil(this.pSub$)).subscribe();
+		}
 	}
 
 	public remove(id: string): void {
-		this.productServ
-			.remove(id)
-			.pipe(takeUntil(this.pSub))
-			.subscribe(() => {
-				this.products = this.products.filter((product) => product.id !== id);
-				this.cdr.detectChanges();
-			});
+		this.productServ.remove(id).pipe(takeUntil(this.pSub$)).subscribe();
 	}
 
-	ngOnDestroy() {
-		this.pSub.next();
-		this.pSub.complete();
+	ngOnDestroy(): void {
+		this.pSub$.next();
+		this.pSub$.complete();
 	}
 }
