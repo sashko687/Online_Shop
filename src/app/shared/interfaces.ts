@@ -8,6 +8,6 @@ id?: string;
 title?: string;
 photo?: string;
 info?: string;
-price?: string;
+price?: string | number;
 date?: Date;
 }

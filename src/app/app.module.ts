@@ -1,3 +1,4 @@
+import { SortPriceModule } from './sort-price/sort-price.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -51,6 +52,7 @@ import { SortingPipeModule } from './sorting-pipe/sorting-pipe.module';
 		TabletPageComponent,
 	],
 	imports: [
+		SortPriceModule,
 		SortingPipeModule,
 		SearchModule,
 		MatBadgeModule,

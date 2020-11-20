@@ -1,7 +1,8 @@
 import { ProductQuery } from './../../product-store/product.query';
-import { ChangeDetectionStrategy,Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/product-store/product.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-main-layout',
@@ -10,9 +11,9 @@ import { Observable } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent implements OnInit {
-public	type = 'Phone';
-public	hidden = false;
-public	countPdoductInCart: Observable<number>;
+	public type = 'Phone';
+	public hidden = false;
+	public countPdoductInCart: Observable<number>;
 	constructor(public productServ: ProductService, public productQuery: ProductQuery) {}
 
 	ngOnInit(): void {
@@ -26,4 +27,5 @@ public	countPdoductInCart: Observable<number>;
 	public toggleBadgeVisibility(): void {
 		this.hidden = !this.hidden;
 	}
+
 }

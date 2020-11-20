@@ -1,6 +1,6 @@
 .btn{
 margin: 1rem .5rem 0;
-width: 70%  ;
+width: 45%;
 background-color: var(--btn-bgcolor);
 color: var(--btn-color);
 }
@@ -20,4 +20,9 @@ hr{
   width: 100%;
   margin-top: 2rem;
   margin-left: auto 0;
+}
+
+.btn-green{
+width: 45%;
+background-color: rgb(10, 228, 10);
 }

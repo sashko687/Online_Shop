@@ -7,5 +7,6 @@
 
     <h2>Price: {{product.price}} $</h2>
 
-    <button mat-button  class="btn" (click)="addProduct(product)">Add to cart</button><hr>
+    <button mat-button  class="btn" (click)="addProduct(product)">Add to cart</button>
+    <button mat-button  class="btn-green" (click)="addProduct(product)" routerLink="/cart">Buy</button><hr>
 </div>

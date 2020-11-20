@@ -1,2 +1,9 @@
-
+.sort-price{
+  width: 15%;
+}
+@media(max-width: 767px) {
+  .sort-price{
+    width: 25%;
+  }
+}
 

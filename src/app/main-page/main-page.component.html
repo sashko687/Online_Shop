@@ -1,5 +1,16 @@
+<div class="sort-price">
+  <mat-form-field appearance="fill">
+  <mat-label>Sort price</mat-label>
+  <mat-select matNativeControl [(value)]="selectedPrice">
+    <mat-option  value="lowPrice">Low price</mat-option>
+    <mat-option  value="highPrice">High price</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
 <div *ngIf="products$ | async as products; else loading" class="dashboard">
-    <app-product *ngFor="let product of products | searchProduct: (searchProduct$ |async)" [product]="product" class="box"></app-product>
+    <app-product *ngFor="let product of products | sortPrice: selectedPrice
+    | searchProduct: (searchProduct$ |async )"
+    [product]="product" class="box"></app-product>
 </div>
 
 <ng-template #loading>

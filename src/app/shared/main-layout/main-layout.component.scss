@@ -28,6 +28,11 @@ button {
 .mat-badge {
 	position: fixed;
 }
+.sort-price{
+  padding-top: 40px;
+  position: fixed;
+  z-index: 3;
+}
 @media (max-width: 767px) {
 	ul {
 		display: none;
