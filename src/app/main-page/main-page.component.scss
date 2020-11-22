@@ -1,6 +1,8 @@
 .sort-price{
-  width: 15%;
+  display: flex;
+  width: 25%;
 }
+
 @media(max-width: 767px) {
   .sort-price{
     width: 27%;

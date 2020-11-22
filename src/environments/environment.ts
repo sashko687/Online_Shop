@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiKey: 'AIzaSyBBp4aLpvAfvtt3BnEASqwdq0DmjiJz6es',
-  fbDbUrl: 'https://online-shope-c39f5.firebaseio.com/'
+  fbDbUrl: 'https://online-shope-c39f5.firebaseio.com/',
+  stripeKey: 'pk_test_51HpsadH9SyY8wlG5r9g443RSctGSnBcoeYPRsAnBP8hyLmZ3AdYhNaIX1v8n3ahvo6hQGDyjaaf1b7n3B6BF915s0041UP7UPM'
 };
 
 /*

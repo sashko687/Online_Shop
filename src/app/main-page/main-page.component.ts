@@ -1,9 +1,9 @@
 import { ProductQuery } from './../product-store/product.query';
 import { Product } from './../shared/interfaces';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductService } from '../product-store/product.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-main-page',

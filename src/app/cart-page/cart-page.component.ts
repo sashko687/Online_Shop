@@ -19,7 +19,7 @@ export class CartPageComponent implements OnInit {
 	public cartProducts$: Observable<Product[]>;
 	public totalPrice$: Observable<number>;
 	private unSub$ = new Subject();
-	public displayedColumns = ['type', 'title', 'actions', 'price'];
+	public displayedColumns = ['type', 'title', 'price', 'actions'];
 
 	public form: FormGroup;
 	public submitted = new BehaviorSubject(false);

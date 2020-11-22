@@ -8,11 +8,11 @@
 </mat-form-field>
 </div>
 <div *ngIf="products$ | async as products; else loading" class="dashboard">
-    <app-product *ngFor="let product of products | sortPrice: selectedPrice
-    | searchProduct: (searchProduct$ |async )"
+    <app-product *ngFor="let product of products
+    | searchProduct: (searchProduct$ |async)
+    | sortPrice: selectedPrice"
     [product]="product" class="box"></app-product>
 </div>
-
 <ng-template #loading>
     <div class="flex-center"><mat-spinner></mat-spinner></div>
     <p class="text-center">Loading...</p>

@@ -1,3 +1,4 @@
+import { PaginatorPipeModule } from './paginator-pipe/paginator-pipe.module';
 import { SortPriceModule } from './sort-price/sort-price.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -37,6 +38,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { SearchModule } from './search-pipe/search.module';
 import { SortingPipeModule } from './sorting-pipe/sorting-pipe.module';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
 	declarations: [
@@ -52,6 +54,7 @@ import { SortingPipeModule } from './sorting-pipe/sorting-pipe.module';
 		TabletPageComponent,
 	],
 	imports: [
+		PaginatorPipeModule,
 		SortPriceModule,
 		SortingPipeModule,
 		SearchModule,
@@ -77,6 +80,7 @@ import { SortingPipeModule } from './sorting-pipe/sorting-pipe.module';
 		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 		BrowserAnimationsModule,
 		environment.production ? [] : AkitaNgDevtools.forRoot(),
+		NgxStripeModule.forRoot(environment.stripeKey),
 		AkitaNgRouterStoreModule.forRoot(),
 	],
 	providers: [
